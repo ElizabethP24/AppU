@@ -78,6 +78,10 @@ app.get('/escanerQR', (req, res) => {
   res.render('escaner');
 });
 
+app.get('/perfil', (req, res) => {
+  res.render('perfil');
+});
+
 
 // Iniciar el servidor
 app.listen(5000, () => {
