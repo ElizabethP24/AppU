@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escanea el código QR</title>
     <style>
         body {
@@ -39,32 +42,51 @@
     </header>
     <main class="container">
         <h2>Saca tu teléfono y escanea el código QR</h2>
-        <div id="qr-scanner"></div>
+        <video id="qr-scanner" width="300" height="300" playsinline></video>
     </main>
     <footer>
         <p>&copy; 2022 Escanea el código QR</p>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/instascan@4.1.5/build/instascan.min.js"></script>
     <script>
-        const { Scanner, Camera } = Instascan;
-
-        const qrScanner = new Scanner({ video: document.getElementById('qr-scanner') });
-        
-        qrScanner.addListener('scan', function (content) {
-            console.log(content);
-            window.location.href = content;
-        });
-        
-        Camera.getCameras().then(function (cameras) {
-            if (cameras.length > 0) {
-                qrScanner.start(cameras[0]);
-            } else {
-                console.error('No cameras found.');
+        async function startScanner() {
+            const video = document.getElementById('qr-scanner');
+            
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                video.srcObject = stream;
+                
+                const track = stream.getVideoTracks()[0];
+                const capabilities = track.getCapabilities();
+                const settings = track.getSettings();
+                
+                const { width, height } = capabilities;
+                video.width = settings.width || width;
+                video.height = settings.height || height;
+                
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = video.width;
+                canvas.height = video.height;
+                
+                const qrScannerInterval = setInterval(() => {
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, canvas.width, canvas.height);
+                    
+                    if (code) {
+                        console.log(code.data);
+                        clearInterval(qrScannerInterval);
+                        window.location.href = code.data;
+                    }
+                }, 1000 / 5);
+                
+            } catch (error) {
+                console.error('Error accessing the camera:', error);
             }
-        }).catch(function (e) {
-            console.error(e);
-        });
-    </script>
-</body>
+        }
 
+        startScanner();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.0.0/dist/jsQR.min.js"></script>
+</body>
 </html>
