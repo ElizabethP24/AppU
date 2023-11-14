@@ -5,7 +5,7 @@ body {
 }
 
 #banner {
-    background-image: url('/public/img/Banner\ Ppal.png');    
+    background-image: url('img/BannerPpal.png');    
     background-size: cover;
     text-align: center;
     color: white;
@@ -19,7 +19,7 @@ body {
 
 
 #contenido {
-    background-image: url('/public/img/background.jpg');
+    background-image: url('img/background.jpg');
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,7 +27,7 @@ body {
     background-size: cover;    
 }
 #pie {
-    background-image: url('/public/img/background\ footer.jpg');
+    background-image: url('img/backgroundFooter.jpg');
     color: white;
     text-align: center;
     height: 200px;
