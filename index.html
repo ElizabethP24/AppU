@@ -45,22 +45,16 @@
         <p>&copy; 2022 Escanea el código QR</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/instascan@4.1.5/build/instascan.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/instascan@4.1.5/build/instascan.min.js"></script>
     <script>
-        const { Scanner, Camera } = Instascan;
+        const { Camera } = Instascan;
 
-        const qrScanner = new Scanner({ video: document.getElementById('qr-scanner') });
-        
-        qrScanner.addListener('scan', function (content) {
-            console.log(content);
-            window.location.href = content;
-        });
-        
         Camera.getCameras().then(function (cameras) {
             if (cameras.length > 0) {
-                qrScanner.start(cameras[0]);
+                const qrScanner = document.getElementById('qr-scanner');
+                Camera.scan(qrScanner, function (content) {
+                    console.log(content);
+                    window.location.href = content;
+                });
             } else {
                 console.error('No cameras found.');
             }
