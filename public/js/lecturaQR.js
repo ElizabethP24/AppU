@@ -1,18 +1,39 @@
-function startQRReader() {
-    let html5QrcodeScanner = new Html5QrcodeScanner(
-       "reader", // élément HTML où la vidéo sera insérée.
-       { fps: 10, qrbox: 250 } // configuration de la lecture du QR.
-    );
+async function startScanner() {
+   const video = document.getElementById('qr-scanner');
    
-    // Permet de vérifier si le scanner est prêt.
-    html5QrcodeScanner.render(false);
-   
-    html5QrcodeScanner.onDetected((decodedText) => {
-       // Faire quelque chose avec le contenu décodé du QR.
-       console.log(`QR code detected: ${decodedText}`);
-   
-       // Arrêter le scanner.
-       html5QrcodeScanner.clear();
-       // Si vous voulez continuer à scanner des QR, ne faites pas apparaître ceci.
-    });
+   try {
+       const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+       video.srcObject = stream;
+       
+       const track = stream.getVideoTracks()[0];
+       const capabilities = track.getCapabilities();
+       const settings = track.getSettings();
+       
+       const { width, height } = capabilities;
+       video.width = settings.width || width;
+       video.height = settings.height || height;
+       
+       const canvas = document.createElement('canvas');
+       const context = canvas.getContext('2d');
+       canvas.width = video.width;
+       canvas.height = video.height;
+       
+       const qrScannerInterval = setInterval(() => {
+           context.drawImage(video, 0, 0, canvas.width, canvas.height);
+           const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+           const code = jsQR(imageData.data, canvas.width, canvas.height);
+           
+           if (code) {
+               console.log(code.data);
+               clearInterval(qrScannerInterval);
+               window.location.href = code.data;
+           }
+       }, 1000 / 5);
+       
+   } catch (error) {
+       console.error('Error accessing the camera:', error);
    }
+}
+
+startScanner();
+
