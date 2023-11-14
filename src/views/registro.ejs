@@ -4,51 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <style>
-        #banner {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-
-        #contenido {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 130px);
-        }
-
-        .boton {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: center;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-        #pie {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-    </style>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/registro.css">
+    <script src="validarCampos.js"></script>
 </head>
 <body>
     <div id="banner">
-        <!-- Aquí va el logo o imagen del banner -->
+        <h1>Registro usuarios
+        </h1>
+        <img src="/img/Logo_claroU.png" alt="Logo">
     </div>
-
-
+    
     <div class="container-fluid pt-5">
         <div class="d-flex flex-column text-center mb-5 pt-5">
-              <h4 class="text-secondary mb-3">Regístro Usuario</h4>
+            
             <h2 class="display-4 m-0">Ingresa <span class="text-primary"> datos solicitados</span></h2>
             <h3>¡Correo electrónico a sido verificado satisfactoriamente!</h3>
         </div>
@@ -60,7 +30,7 @@
 
                         <div class="control-group">
                             <label for="nombre">Nombre:</label>
-                            <input type="text" class="form-control p-4" id="nombre"  name="nombre" placeholder="Nombre" required="required" data-validation-required-message="Por favor ingresar nombre" />
+                            <input type="text" class="form-control p-4" id="nombre"  name="nombre" placeholder="Nombre" required="required"  data-validation-required-message="Por favor ingresar nombre" />
                             <p class="help-block text-danger"></p>
 
                             <label for="nombre">Documento:</label>
@@ -88,12 +58,11 @@
 
                             
                             <label for="nombre">Contraseña:</label>
-                            <input type="text" class="form-control p-4" id="contrasena"  name="contrasena" placeholder="Contraseña" required="required" data-validation-required-message="Por favor ingresar contraseña" />
+                            <input type="text" class="form-control p-4" id="contrasena"  name="contrasena" placeholder="Contraseña" onchange="validarContrasena()" required="required" data-validation-required-message="Por favor ingresar contraseña" />
                             <p class="help-block text-danger"></p>
 
-                            
                             <label for="nombre">Confirmar Contraseña:</label>
-                            <input type="password" class="form-control p-4" id="confirm_contrasena" name="confirm_contrasena" placeholder="Confirmar Contraseña" required="required" data-validation-required-message="Por favor confirmar contraseña" />
+                            <input type="password" class="form-control p-4" id="confirm_contrasena" name="confirm_contrasena" placeholder="Confirmar Contraseña" onkeyup="validarContrasena()"required="required" data-validation-required-message="Por favor confirmar contraseña" />
                             <p class="help-block text-danger"></p>
                          
     
@@ -110,9 +79,22 @@
             <button type="submit" class="boton">Completar Registro</button>
         </form>
     </div>
-    
-    <div id="pie">
-        <!-- Aquí va el texto o información del pie de página -->
-    </div>
+</div>
+</div>
+<div id="pie">
+    <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas Colombia. 
+        Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm 
+        Tel conmutador +57 6 8781500 / Fax 8781501 / Apartado aéreo 275 / Línea gratuita: 01-8000-512120
+        Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción 
+        Email: atencionalciudadano@ucaldas.edu.co 
+        Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co 
+    </p>
+</div>
+
+
+    <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

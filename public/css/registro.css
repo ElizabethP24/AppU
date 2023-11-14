@@ -5,7 +5,7 @@ body {
 }
 
 #banner {
-    background-image: url('/public/img/Banner\ Ppal.png');    
+    background-image: url('/img/BannerPpal.png');    
     background-size: cover;
     text-align: center;
     color: white;
@@ -22,18 +22,6 @@ body {
     height: auto;
     width: auto;
 }
-#pie {
-    background-image: url('/public/img/background\ footer.jpg');
-    color: white;
-    text-align: center;
-    height: 200px;
-    background-size: cover;
-    
-}
-#pie p {
-    padding: 60px;
-}
-
 
 .boton {
     display: inline-block;
@@ -58,8 +46,14 @@ body {
     color: #fff;
 }
 
-
-
-#banner img {
+#pie {
+    background-image: url('/img/backgroundFooter.jpg');
+    color: white;
+    text-align: center;
+    height: 200px;
+    background-size: cover;
     
+}
+#pie p {
+    padding: 60px;
 }

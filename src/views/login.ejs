@@ -1,84 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+    <title>Login</title>
 
-        .banner {
-            background-color: #f8f9fa;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-        .login-form {
-            background-color: #ffffff;
-            padding: 50px;
-            width: 100%;
-            max-width: 400px;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    <!-- Tu hoja de estilo personalizada -->
+    <link rel="stylesheet" href="/css/index.css">
 
-        .login-form input {
-            margin-bottom: 20px;
-            padding: 10px;
-            width: 100%;
-            border: 1px solid #ddd;
-        }
-
-        .login-form button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .login-form button:hover {
-            background-color: #45a049;
-        }
-
-        .footer {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
-    </style>
 </head>
 <body>
-    <div class="banner">
-        <!-- Aquí va el logo o imagen del banner -->
+    <div id="banner">
+        <h1>Login</h1>
+        <img src="/img/Logo_claroU.png" alt="Logo">
     </div>
 
-    <div class="login-form">
-        <h2>Ingreso</h2>
-        <form name="sentMessage" id="loginForm" novalidate="novalidate" action="/usuarios/login" method="POST">
-           
-            <input type="text" class="form-control p-4" id="username"  name="username" placeholder="Usuario" required="required" data-validation-required-message="Por favor ingresar usuario" />
-            <p class="help-block text-danger"></p>
-            
-            <input type="text" class="form-control p-4" id="password"  name="password" placeholder="Contraseña" required="required" data-validation-required-message="Por favor ingresar contraseña" />
-            <p class="help-block text-danger"></p>
-            <button type="submit" class="boton">Enviar</button>
-        <p><a href="/rcontrasena">Olvidó su contraseña?</a></p>
-        </form>
+    <div id="contenido">
+        <div class="login-form">
+            <h2>Ingreso</h2>
+            <form name="sentMessage" id="loginForm" novalidate="novalidate" action="/usuarios/login" method="POST">
+               
+                <input type="text" class="form-control p-4" id="username"  name="username" placeholder="Usuario" required="required" data-validation-required-message="Por favor ingresar usuario" />
+                <p class="help-block text-danger"></p>
+                
+                <input type="text" class="form-control p-4" id="password"  name="password" placeholder="Contraseña" required="required" data-validation-required-message="Por favor ingresar contraseña" />
+                <p class="help-block text-danger"></p>
+                <button type="submit" class="boton">Enviar</button>
+            <p><a href="/rcontrasena">Olvidó su contraseña?</a></p>
+            </form>
+        </div>
     </div>
 
-    <div class="footer">
-        <!-- Aquí va el pie de página -->
+    <div id="pie">
+        <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas Colombia. 
+            Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm 
+            Tel conmutador +57 6 8781500 / Fax 8781501 / Apartado aéreo 275 / Línea gratuita: 01-8000-512120
+            Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción 
+            Email: atencionalciudadano@ucaldas.edu.co 
+            Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co 
+        </p>
     </div>
+
+    <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

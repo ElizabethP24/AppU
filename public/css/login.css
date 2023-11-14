@@ -28,7 +28,7 @@ body {
     background-size: cover;    
 }
 #pie {
-    background-image: url('/public/img/background\ footer.jpg');
+    background-image: url('/public/img/backgroundFooter.jpg');
     color: white;
     text-align: center;
     height: 200px;
