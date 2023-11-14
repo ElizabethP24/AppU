@@ -1,11 +1,11 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif,'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: Arial, sans-serif, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 #banner {
-    background-image: url('/img/BannerPpal.png');    
+    background-image: url('/img/BannerPpal.png');
     background-size: cover;
     text-align: center;
     color: white;
@@ -13,7 +13,8 @@ body {
     justify-content: space-evenly;
     height: auto;
 }
-#banner h1{
+
+#banner h1 {
     padding: 30px;
 }
 
@@ -24,16 +25,18 @@ body {
     justify-content: center;
     align-items: center;
     height: 335px;
-    background-size: cover;    
+    background-size: cover;
 }
+
 #pie {
     background-image: url('/img/backgroundFooter.jpg');
     color: white;
     text-align: center;
     height: 200px;
     background-size: cover;
-    
+
 }
+
 #pie p {
     padding: 60px;
 }
@@ -68,11 +71,42 @@ body {
 
 
 #banner img {
-    width: auto; /* Ajusta el ancho del logo según tus preferencias */
-    height: auto; /* Hace que la altura se ajuste automáticamente manteniendo la proporción */
+    width: auto;
+    /* Ajusta el ancho del logo según tus preferencias */
+    height: auto;
+    /* Hace que la altura se ajuste automáticamente manteniendo la proporción */
 }
 
 
+/* Media query para ajustar estilos en pantallas más pequeñas */
+@media only screen and (max-width: 768px) {
+    #banner h1 {
+        padding: 15px;
+    }
+
+    #pie p {
+        padding: 10px;
+    }
+
+    .boton {
+        padding: 0.8rem 1.6rem;
+        font-size: 0.9rem;
+        margin: 0.5rem;
+        margin-left: 0;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #banner h1 {
+        padding: 15px;
+        font-size: 1.5rem;
+        /* Ajusta el tamaño de fuente en pantallas más pequeñas */
+    }
+
+    #banner img {
+        max-width: min-content;
+        /* Limita el ancho máximo de la imagen */
+    }
 
 
-
+}

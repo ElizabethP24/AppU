@@ -21,12 +21,12 @@
     <div id="contenido">
         <div class="login-form">
             <h2>Ingreso</h2>
-            <form name="sentMessage" id="loginForm" novalidate="novalidate" action="/usuarios/login" method="POST">
+            <form name="sentMessage" id="loginForm" validate="validate" action="/usuarios/login" method="POST">
                
                 <input type="text" class="form-control p-4" id="username"  name="username" placeholder="Usuario" required="required" data-validation-required-message="Por favor ingresar usuario" />
                 <p class="help-block text-danger"></p>
                 
-                <input type="password" class="form-control p-4" id="password"  name="password" placeholder="Contraseña" required="required" data-validation-required-message="Por favor ingresar contraseña" />
+                <input type="text" class="form-control p-4" id="password"  name="password" placeholder="Contraseña" required="required" data-validation-required-message="Por favor ingresar contraseña" />
                 <p class="help-block text-danger"></p>
                 <button type="submit" class="boton">Enviar</button>
             <p><a href="/rcontrasena">Olvidó su contraseña?</a></p>
