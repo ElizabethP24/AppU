@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import debug from 'debug'; // Asegúrate de importar debug
 import path, { dirname } from 'path';
 import usuariosRouter from './src/routers/usuariosRouter.js';
+import estudianteRouter from './src/routers/estudianteRouter.js';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
@@ -37,6 +38,7 @@ app.use(cookieParser());
 
 // Rutas
 app.use('/usuarios', usuariosRouter);
+app.use('/estudiante', estudianteRouter);
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
@@ -80,6 +82,25 @@ app.get('/escanerQR', (req, res) => {
 
 app.get('/perfil', (req, res) => {
   res.render('perfil');
+});
+
+app.get('/Estudiante', (req, res) => {
+  res.render('registroEstudiante');
+});
+
+app.use('/public', express.static('public'));
+
+// Primero define ensureAuthenticated
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+      return next();
+  }
+  res.redirect('/login');
+}
+
+// Rutas que requieren autenticación
+app.get('/estudiante', ensureAuthenticated, function(req, res) {
+  res.render('vista_estudiante', { user: req.user });
 });
 
 

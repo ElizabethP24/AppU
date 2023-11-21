@@ -81,15 +81,15 @@ usuariosRouter.route('/dashboard').get((req, res) => {
         // Lógica de redirección basada en el tipo de usuario
         switch (user.rol) {
             case 'estudiante':
-                console.log("Redirigiendo estudiante a /registro");
+                console.log("Redirigiendo estudiante a /perfilEstudiante");
                 res.redirect('/estudiante');
                 break;
             case 'profesor':
-                console.log("Redirigiendo profesor a /dashboard-profesor");
+                console.log("Redirigiendo profesor a /perfilProfesor");
                 res.redirect('/profesor');
                 break;
             case 'administrador':
-                console.log("Redirigiendo administrador a /rcontrasena");
+                console.log("Redirigiendo administrador a /perfilAdministrador");
                 res.redirect('/administrador');
                 break;
             default:

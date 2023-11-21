@@ -3,62 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ingreso por Código QR a las Aulas de Clase</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+    <title>Perfil Estudiante</title>
+    <script src="/public/js/perfil.js"></script>
 
-        #banner {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 10px;
-        }
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-        #contenido {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 130px);
-        }
+    <!-- Tu hoja de estilo personalizada -->
+    <link rel="stylesheet" href="/css/index.css">
+    
+    <script>
 
-        .boton {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
+        async function handleProfileClick() {
+            // Obtener el nombre de usuario del usuario logueado (puedes obtener esto de tu sistema de autenticación)
+            const username = obtenerNombreDeUsuario();
+        
+            // Obtener el usuario por nombre de usuario
+            const usuario = await getUser(username);
+        
+            if (usuario) {
+                // Obtener el ID y el rol del usuario
+                const { id, rol } = usuario;
+        
+                // Realizar consultas adicionales según el rol
+                if (rol === 'estudiante') {
+                    const estudianteEncontrado = await consultarEstudiante(id);
+        
+                    if (estudianteEncontrado) {
+                        // Redirigir a la página correspondiente para estudiantes
+                        window.location.href = '/perfil_estudiante';
+                    } else {
+                        // Redirigir a una página si el usuario no está en la tabla de estudiantes
+                        window.location.href = '/registroEstudiante';
+                    }
+                } else if (rol === 'profesor') {
+                    const profesorEncontrado = await consultarProfesor(id);
+        
+                    if (profesorEncontrado) {
+                        // Redirigir a la página correspondiente para profesores
+                        window.location.href = '/perfil_profesor';
+                    } else {
+                        // Redirigir a una página si el usuario no está en la tabla de profesores
+                        window.location.href = '/';
+                    }
+                }
+            }
         }
-
-        #pie {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 10px;
+        async function consultarEstudiante(id) {
+            const estudiante = await sql`
+                    SELECT *
+                    FROM estudiante
+                    WHERE id_persona = ${id};`;
+            return usuarios[0] || null;
         }
-    </style>
+        
+        async function consultarProfesor(id) {
+            const profesor = await sql`
+                    SELECT *
+                    FROM profesores
+                    WHERE id_persona = ${id};`;
+            return profesor[0] || null;
+        }
+        
+         async function getUser(username) {
+            const usuarios = await sql`
+                SELECT *
+                FROM personal_u
+                WHERE usuario = ${username};`;
+        
+            return usuarios[0] || null;
+        }
+        function obtenerNombreDeUsuario() {
+            return req.session.user.nombre; 
+        }
+        
+    </script>
 </head>
 <body>
     <div id="banner">
-        <!-- Aquí va el logo o imagen del banner -->
+        <h1>Perfil Estudiante</h1>
+        <img src="/img/Logo_claroU.png" alt="Logo">
     </div>
 
     <div id="contenido">
-        <button class="boton" onclick="location.href='/perfil'">Perfil</button>
+        <button class="boton" onclick="handleProfileClick()">Perfil</button>
         <button class="boton" onclick="location.href=''">Clases</button>
       
     </div>
 
+
     <div id="pie">
-        <!-- Aquí va el texto o información del pie de página -->
+        <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas Colombia. 
+            Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm 
+            Tel conmutador +57 6 8781500 / Fax 8781501 / Apartado aéreo 275 / Línea gratuita: 01-8000-512120
+            Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción 
+            Email: atencionalciudadano@ucaldas.edu.co 
+            Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co 
+        </p>
     </div>
+
+    <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/registro.css">
+     <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
+     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   </head>
+<body>
+    <div id="banner">
+        <h1>Registro Estuaidntes
+        </h1>
+        <img src="/img/Logo_claroU.png" alt="Logo">
+    </div>
+    
+
+    <div class="container-fluid pt-5">
+        <div class="d-flex flex-column text-center mb-5 pt-5">
+            <h2 class="display-4 m-0">Ingresa <span class="text-primary"> datos solicitados</span></h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 mb-5">
+                <div class="contact-form">
+                    <div id="success"></div>
+                    <form name="sentMessage" id="contactForm" novalidate="novalidate" action="/estudiante/crear" method="POST">
+                     
+                           <div class="control-group">
+                            <label for="nombre">edad:</label>
+                            <input type="text" class="form-control p-4" id="edad"  name="edad" placeholder="Edad" required="required"  data-validation-required-message="Por favor ingresar su edad" />
+                            <p class="help-block text-danger"></p>
+
+                         
+                            <label for="nombre">Programa:</label>
+                            <select class="form-control p-4" id="programa" name="programa" required="required" data-validation-required-message="Por favor ingresar programa">
+                                <option value="Ingenieria en Sistemas y Computación">Ingenieria en Sistemas y Computación</option>
+                                <option value="Ingenieria de Alimentos">Ingenieria de Alimentos</option>
+                                <option value="Medicina">Medicina</option>
+                                <option value="Biologia">Biologia</option>
+                                <option value="Geologia">Geologia</option>
+                                <option value="Derecho">Derecho</option>
+                            </select>
+                            <p class="help-block text-danger"></p>
+
+                            <label for="nombre">Semestre:</label>
+                            <select class="form-control p-4" id="semestre" name="semestre" required="required" data-validation-required-message="Por favor ingresar semestre">
+                                <option value="1">I</option>
+                                <option value="2">II</option>
+                                <option value="3">III</option>
+                                <option value="4">IV</option>
+                                <option value="5">V</option>
+                                <option value="6">VI</option>
+                                <option value="7">VII</option>
+                                <option value="8">VIII</option>
+                                <option value="9">IX</option>
+                            </select>
+                            <p class="help-block text-danger"></p>
+
+            <button type="submit" class="boton">Completar Registro</button>
+        </form>
+    </div>
+</div>
+</div>
+<div id="pie">
+    <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas Colombia. 
+        Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm 
+        Tel conmutador +57 6 8781500 / Fax 8781501 / Apartado aéreo 275 / Línea gratuita: 01-8000-512120
+        Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción 
+        Email: atencionalciudadano@ucaldas.edu.co 
+        Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co 
+    </p>
+</div>
+
+
+   
+</body>
+</html>
