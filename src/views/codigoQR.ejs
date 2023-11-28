@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/validarCorreo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <title>Validación Correo Electrónico</title>
+
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Tu hoja de estilo personalizada -->
+    <link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+
+    <div id="pie">
+        <!-- Contenido de pie de página -->
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Generar QR</h4>
+                <button class="btn btn-primary" id="btnGenerarQR">Generar QR</button>
+            </div>
+            <div class="col-md-8">
+                <div id="qrcode"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const btnGenerarQR = document.getElementById('btnGenerarQR');
+        const qrcode = new QRCode(document.getElementById('qrcode'), {
+            width: 128,
+            height: 128,
+        });
+
+        const data = {
+            "sala": "Sala L",
+            "Entrada": "09:00",
+            "Salida": "13:00",
+            "Encargado": "Juan Perez",
+         
+          
+        };
+
+        btnGenerarQR.addEventListener('click', () => {
+            qrcode.makeCode(JSON.stringify(data));
+        });
+    </script>
+
+    <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

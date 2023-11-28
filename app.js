@@ -88,6 +88,11 @@ app.get('/Estudiante', (req, res) => {
   res.render('registroEstudiante');
 });
 
+app.get('/codigoQR', (req, res) => {
+  res.render('codigoQR');
+});
+
+
 app.use('/public', express.static('public'));
 
 // Primero define ensureAuthenticated
