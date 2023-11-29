@@ -7,22 +7,22 @@
     <title>Login</title>
 
     <!-- Enlace a Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 
     <!-- Tu hoja de estilo personalizada -->
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/login.css">
 
 </head>
 
 <body>
     <div id="banner">
-        <h1>Login</h1>
+        <h1>Ingreso</h1>
         <img src="/img/Logo_claroU.png" alt="Logo">
     </div>
 
     <div id="contenido">
         <div class="login-form">
-            <h2>Ingreso</h2>
+
             <form name="sentMessage" id="loginForm" validate="validate" action="/usuarios/login" method="POST">
 
                 <input type="text" class="form-control p-4" id="username" name="username" placeholder="Usuario"
@@ -33,10 +33,10 @@
                     required="required" data-validation-required-message="Por favor ingresar contraseña" />
                 <p class="help-block text-danger"></p>
                 <button type="submit" class="boton">Enviar</button>
+                <button onclick="window.history.back();" class="btn btn-secondary mt-3">Atrás</button>
                 <p><a href="/rcontrasena">Olvidó su contraseña?</a></p>
             </form>
         </div>
-        <a href="#" onclick="window.history.back(); return false;" class="btn btn-secondary mt-3">Atrás</a>
     </div>
 
     <div id="pie">
@@ -52,8 +52,7 @@
 
     <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

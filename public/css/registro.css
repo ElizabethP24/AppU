@@ -24,27 +24,24 @@ body {
     width: auto;
 }
 
-.boton {
-    display: inline-block;
-    padding: 15px 32px;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color: #fff;
-    background-color: #008DD2;
-    border: 4px solid #008DD2;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    cursor: pointer;
-    margin: 20px;
-    margin-left: 300px;
+button {
+    font-family: 'Overpass', sans-serif;
+    font-size: 110%;
+    color: black;
+    width: 30%;
+    height: 40px;
+    border: none;
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    background-color: #bbe1fa;
+    margin-top: 10px;
+    margin-left: 40px;
 }
 
-/* Cambios al pasar el ratón sobre el botón */
-.boton:hover {
-    background-color: #1e77a3;
-    color: #fff;
+button:hover {
+    background-color: #0f4c75;
+    color: #bbe1fa;
 }
 
 #pie {

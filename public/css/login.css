@@ -1,3 +1,4 @@
+/*elementos que no cambian*/
 body {
     margin: 0;
     padding: 0;
@@ -18,14 +19,22 @@ body {
     padding: 30px;
 }
 
+#banner img {
+    width: auto;
+    /* Ajusta el ancho del logo según tus preferencias */
+    margin-top: 10px;
+    height: 100px;
+    /* Hace que la altura se ajuste automáticamente manteniendo la proporción */
+}
+
 
 #contenido {
     background-image: url('/img/background.jpg');
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     height: 335px;
-    background-size: cover;
+
 }
 
 #pie {
@@ -42,36 +51,81 @@ body {
 }
 
 
+/*contenido de cada pagina*/
+
 .login-form {
-    background-color: #ffffff;
-    padding: 50px;
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 30%;
+    padding: 50px 30px;
+
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.15);
+
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+
+    box-sizing: border-box;
 }
 
 .login-form input {
-    margin-bottom: 20px;
-    padding: 10px;
+    font-family: 'Overpass', sans-serif;
+    font-size: 110%;
+    color: black;
+
+    display: block;
     width: 100%;
-    border: 1px solid #ddd;
+    height: 40px;
+
+    margin-bottom: 10px;
+    padding: 5px 5px 5px 10px;
+
+    box-sizing: border-box;
+
+    border: none;
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+}
+
+.login-form input::placeholder {
+    font-family: 'Overpass', sans-serif;
+    color: black;
 }
 
 .login-form button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
+    font-family: 'Overpass', sans-serif;
+    font-size: 110%;
+    color: black;
+    width: 30%;
+    height: 40px;
     border: none;
-    cursor: pointer;
-    width: 100%;
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    background-color: #bbe1fa;
+    margin-top: 10px;
+    margin-left: 40px;
 }
 
 .login-form button:hover {
-    background-color: #45a049;
+    background-color: #0f4c75;
+    color: #bbe1fa;
 }
+
+.login-form p a {
+    background-color: #bbe1fa;
+    color: black;
+    outline: none;
+    margin-left: 90px;
+}
+
+
+
+
+
+
+
 
 
 /* Media query para ajustar estilos en pantallas más pequeñas */
@@ -105,4 +159,21 @@ body {
     }
 
 
+}
+
+@media screen and (max-width: 697px) {
+    .login-form {
+        width: 90%;
+        /* Reducir el ancho en pantallas más pequeñas */
+        padding: 20px;
+    }
+
+    .login-form input,
+    .login-form button {
+        margin-bottom: 10px;
+    }
+
+    .login-form button {
+        margin-top: 15px;
+    }
 }
