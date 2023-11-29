@@ -33,23 +33,36 @@
     </div>
 
     <script>
-        const btnGenerarQR = document.getElementById('btnGenerarQR');
-        const qrcode = new QRCode(document.getElementById('qrcode'), {
-            width: 128,
-            height: 128,
-        });
+const btnGenerarQR = document.getElementById('btnGenerarQR');
+const qrcode = new QRCode(document.getElementById('qrcode'), {
+  width: 128,
+  height: 128,
+  correctLevel: QRCode.CorrectLevel.L,
+});
 
-        const data = {
-            "sala": "Sala L",
-            "Entrada": "09:00",
-            "Salida": "13:00",
-            "Encargado": "Juan Perez",
-                 
-        };
+const data = {
+  "sala": "Sala L",
+  "horaEntrada": "09:00",
+  "horaSalida": "13:00",
+  "nombreEncargado": "Juan Perez",
+  "codigoEncargado": "ABC123"
+};
 
-        btnGenerarQR.addEventListener('click', () => {
-            qrcode.makeCode(JSON.stringify(data));
-        });
+const CHUNK_SIZE = 200; // Define el tamaño máximo de cada fragmento
+
+btnGenerarQR.addEventListener('click', () => {
+  const jsonData = JSON.stringify(data);
+  const totalChunks = Math.ceil(jsonData.length / CHUNK_SIZE);
+
+  for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
+    const start = chunkIndex * CHUNK_SIZE;
+    const end = (chunkIndex + 1) * CHUNK_SIZE;
+    const chunkData = jsonData.substring(start, end);
+
+    const qrCodeLabel = `Página ${chunkIndex + 1} de ${totalChunks}`;
+    qrcode.makeCode(chunkData, { label: qrCodeLabel });
+  }
+});
     </script>
 
     <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
