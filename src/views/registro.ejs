@@ -33,46 +33,83 @@
                             <label for="nombre">Nombre:</label>
                             <input type="text" class="form-control p-4" id="nombre"  name="nombre" placeholder="Nombre" required="required"  data-validation-required-message="Por favor ingresar nombre" />
                             <p class="help-block text-danger"></p>
+                            <div id="error_container" class="error"></div>
 
                             <label for="nombre">Documento:</label>
                             <input type="text" class="form-control p-4" id="documento"  name="documento" placeholder="Documento" required="required" data-validation-required-message="Por favor ingresar documento" />
                             <p class="help-block text-danger"></p>
+                            <div id="error_container" class="error"></div>
 
                             <label for="nombre">Dirección:</label>
                             <input type="text" class="form-control p-4" id="direccion"  name="direccion" placeholder="Dirección" required="required" data-validation-required-message="Por favor ingresar dirección" />
                             <p class="help-block text-danger"></p>
+                            <div id="error_container" class="error"></div>
 
 
                             <label for="nombre">Teléfono:</label>
                             <input type="text" class="form-control p-4" id="telefono"  name="telefono" placeholder="Teléfono" required="required" data-validation-required-message="Por favor ingresaar teléfono" />
                             <p class="help-block text-danger"></p>
+                            <div id="error_container" class="error"></div>
 
                             
                             <label for="nombre">Correo:</label>
                             <input type="text" class="form-control p-4" id="correo"  name="correo" placeholder="Correo" required="required" data-validation-required-message="Por favor ingresar correoelectrónico" />
                             <p class="help-block text-danger"></p>
+                            <div id="error_container" class="error"></div>
+
+                            <label for="rol">Rol:</label>
+                            <select name="rol" id="rol" required>
+                                <option value="estudiante">Estudiante</option>
+                                <option value="profesor">Profesor</option>
+                                <option value="profesor">Administrador</option>
+                            </select><br>
 
                             
+                            <label for="rol">Facultad:</label>
+                            <select name="facultad" id="facultad" required>
+                                <option value="Facultad de Artes y Humanidades">Facultad de Artes y Humanidades</option>
+                                <option value="Facultad Cirncias Agropecuarias">Facultad Cirncias Agropecuarias</option>
+                                <option value="Facultad de Ciencias Exactas y Naturales">Facultad de Ciencias Exactas y Naturales</option>
+                                <option value="Facultad de Ciencias Juridicas y Sociales">Facultad de Ciencias Juridicas y Sociales</option>
+                                <option value="Facultad de Ciencias para la Salud">Facultad de Ciencias para la Salud</option>
+                                <option value="Facultad de Ingenieria">Facultad de Ingenieria</option>
+                            </select><br>
+
+                            <label for="rol">Semestre:</label>
+                            <select name="semestre" id="semestre" required>
+                                <option value="1">I</option>
+                                <option value="2">II</option>
+                                <option value="3">III</option>
+                                <option value="4">IV</option>
+                                <option value="5">V</option>
+                                <option value="6">VI</option>
+                                <option value="7">VII</option>
+                                <option value="8">VIII</option>
+                                <option value="9">XI</option>
+                            </select><br>
+
+                            <label for="nombre">Programa</label>
+                            <input type="text" class="form-control p-4" id="programa"  name="programa" placeholder="Programa" required="required" data-validation-required-message="Por favor ingresar el programa" />
+                            <p class="help-block text-danger"></p>
+                            <div id="error_container" class="error"></div>
+
+
                             <label for="nombre">Usuario</label>
                             <input type="text" class="form-control p-4" id="usuario"  name="usuario" placeholder="Usuario" required="required" data-validation-required-message="Por favor ingresar usuario" />
                             <p class="help-block text-danger"></p>
+                            <div id="error_container" class="error"></div>
 
                             
                             <label for="nombre">Contraseña:</label>
                             <input type="text" class="form-control p-4" id="contrasena"  name="contrasena" placeholder="Contraseña" onchange="validarContrasena()" required="required" data-validation-required-message="Por favor ingresar contraseña" />
                             <p class="help-block text-danger"></p>
+                            <div id="error_container" class="error"></div>
 
                             <label for="nombre">Confirmar Contraseña:</label>
                             <input type="password" class="form-control p-4" id="confirm_contrasena" name="confirm_contrasena" placeholder="Confirmar Contraseña" onkeyup="validarContrasena()"required="required" data-validation-required-message="Por favor confirmar contraseña" />
                             <p class="help-block text-danger"></p>
-                         
-    
-            <label for="rol">Rol:</label>
-            <select name="rol" id="rol" required>
-                <option value="estudiante">Estudiante</option>
-                <option value="profesor">Profesor</option>
-            </select><br>
-
+                            <div id="error_container" class="error"></div>
+               
             <script>
                 validarContrasena();
                 validarCampos();

@@ -4,7 +4,6 @@ import morgan from 'morgan';
 import debug from 'debug'; // Asegúrate de importar debug
 import path, { dirname } from 'path';
 import usuariosRouter from './src/routers/usuariosRouter.js';
-import estudianteRouter from './src/routers/estudianteRouter.js';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
@@ -38,7 +37,6 @@ app.use(cookieParser());
 
 // Rutas
 app.use('/usuarios', usuariosRouter);
-app.use('/estudiante', estudianteRouter);
 
 app.set('views', './src/views');
 app.set('view engine', 'ejs');

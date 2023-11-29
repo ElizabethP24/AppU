@@ -13,8 +13,10 @@ telefono,
 correo,
 usuario,
 contrasena,
-qr,
 rol,
+facultad, 
+semestre, 
+programa
 from personal_u`
     res.render('usuarios/usuarios', { usuario });
 });
@@ -40,8 +42,10 @@ usuariosRouter.route('/crear').post(async (req, res) => {
         'telefono',
         'correo',
         'usuario',
-        'contrasena',
-        'rol')};`;
+        'rol',
+        'facultad',
+        'semestre',
+        'programa')};`;
     console.log("usuario ingresado");
     return usuarios;
    
@@ -122,15 +126,10 @@ usuariosRouter.route('/dashboard').get((req, res) => {
     }
 });
 
-
-
 usuariosRouter.route('/logout').get((req, res) => {
     // Cerrar sesión
     req.session.destroy();
     res.redirect('/');
-});
-
-
-  
+});  
     
 export default usuariosRouter;
