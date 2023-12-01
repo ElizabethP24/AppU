@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="js/validarCorreo.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-  <title>Validación Correo Electrónico</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/validarCorreo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <title>Validación Correo Electrónico</title>
 
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-
-  <!-- Tu hoja de estilo personalizada -->
-  <link rel="stylesheet" href="/css/index.css">
+    <!-- Tu hoja de estilo personalizada -->
+    <link rel="stylesheet" href="/css/index.css">
 
 </head>
-
 <body>
-  <div id="banner">
-    <h1>Generar codigo QR</h1>
-    <img src="/img/Logo_claroU.png" alt="Logo">
-  </div>
 
+    <div id="pie">
+        <!-- Contenido de pie de página -->
+    </div>
 
     <div class="container mt-5">
         <div class="row">
@@ -35,42 +33,47 @@
     </div>
 
     <script>
-const btnGenerarQR = document.getElementById('btnGenerarQR');
-const qrcode = new QRCode(document.getElementById('qrcode'), {
-  width: 128,
-  height: 128,
-  correctLevel: QRCode.CorrectLevel.L,
-});
-
-const data = {
-  "sala": "Sala L",
-  "horaEntrada": "09:00",
-  "horaSalida": "13:00",
-  "nombreEncargado": "Juan Perez",
-  "codigoEncargado": "ABC123"
-};
-
-const CHUNK_SIZE = 200; // Define el tamaño máximo de cada fragmento
-
-btnGenerarQR.addEventListener('click', () => {
-  const jsonData = JSON.stringify(data);
-  const totalChunks = Math.ceil(jsonData.length / CHUNK_SIZE);
-
-  for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
-    const start = chunkIndex * CHUNK_SIZE;
-    const end = (chunkIndex + 1) * CHUNK_SIZE;
-    const chunkData = jsonData.substring(start, end);
-
-    const qrCodeLabel = `Página ${chunkIndex + 1} de ${totalChunks}`;
-    qrcode.makeCode(chunkData, { label: qrCodeLabel });
-  }
-});
-    </script>
+        const btnGenerarQR = document.getElementById('btnGenerarQR');
+        const qrcode = new QRCode(document.getElementById('qrcode'), {
+          width: 256,
+          height: 256,
+          correctLevel: QRCode.CorrectLevel.L,
+        });
+      
+        const data = {
+          "sala": "Sala L",
+          "horaEntrada": "09:00",
+          "horaSalida": "13:00",
+          "nombreEncargado": "Juan Perez",
+          "codigoEncargado": "ABC123"
+        };
+      
+        const CHUNK_SIZE = 200;
+        const claveEncriptacion = "claveSecreta";
+      
+        btnGenerarQR.addEventListener('click', () => {
+          const jsonData = JSON.stringify(data);
+          const totalChunks = Math.ceil(jsonData.length / CHUNK_SIZE);
+      
+          for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
+            const start = chunkIndex * CHUNK_SIZE;
+            const end = (chunkIndex + 1) * CHUNK_SIZE;
+            const chunkData = jsonData.substring(start, end);
+      
+            const qrCodeLabel = `Página ${chunkIndex + 1} de ${totalChunks}`;
+      
+            const ciphertext = CryptoJS.AES.encrypt(chunkData, claveEncriptacion).toString();
+            qrcode.makeCode(ciphertext, { label: qrCodeLabel });
+          }
+        });
+      </script>
 
     <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 
+</body>
 </html>
