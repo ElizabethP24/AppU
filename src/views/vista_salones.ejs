@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>FullCalendar Example</title>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.3.1/main.min.css">
+
+</head>
+
+<body>
+ <div id="calendar"></div>
+ <script>
+    import { Calendar } from '@fullcalendar/core';
+    import dayGridPlugin from '@fullcalendar/daygrid';
+    import timeGridPlugin from '@fullcalendar/timegrid';
+    import listPlugin from '@fullcalendar/list';
+    
+    let calendar = new Calendar(calendarEl, {
+      plugins: [ dayGridPlugin, timeGridPlugin, listPlugin ],
+      initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,listWeek'
+      }
+    });
+ </script>
+</body>
+</html>

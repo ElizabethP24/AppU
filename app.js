@@ -8,12 +8,26 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
 import { localStrategy } from './config/strategies/localStrategy.js';
- 
+import bodyParser from 'body-parser';
+import xlsx from 'xlsx'; // Agregado para xlsx
+import multer from 'multer';
+import sql from './config/database.js'; // Asegúrate de ajustar la ruta correctamente
+
+
+
+// Importar la configuración de Passport
+
+
 
 // Crear la aplicación Express
 const debugApp = debug('app');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const upload = multer({ dest: 'uploads/' }); // Carpeta donde se almacenarán temporalmente los archivos
+
+// Configuración de bodyParser y otras configuraciones de Express
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Configurar express-session antes de passport
 app.use(session({
@@ -21,6 +35,13 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+
+// Inicializar passport después de express-session
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Inicializar la estrategia local
+localStrategy();
 
 // Inicializar passport después de express-session
 app.use(passport.initialize());
@@ -90,6 +111,13 @@ app.get('/codigoQR', (req, res) => {
   res.render('codigoQR');
 });
 
+app.get('/cargarArchivo', (req, res) => {
+  res.render('subirHorario');
+});
+
+app.get('/salones', (req, res) => {
+  res.render('vista_salones');
+});
 
 app.use('/public', express.static('public'));
 
@@ -106,6 +134,71 @@ app.get('/estudiante', ensureAuthenticated, function(req, res) {
   res.render('vista_estudiante', { user: req.user });
 });
 
+app.post('/subir', upload.single('archivo'), async (req, res) => {
+  try {
+    // Verificar la existencia del archivo
+    console.log(req.file);
+
+    if (!req.file) {
+      res.status(400).send('No se ha seleccionado ningún archivo.');
+      return;
+    }
+
+    // Leer el archivo Excel
+    const filePath = req.file.path;
+    const workbook = xlsx.readFile(filePath);
+    const sheetName = workbook.SheetNames[0];
+    const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+    // Iterar sobre los datos y realizar las inserciones
+    for (const row of data) {
+      // Corregir nombres de propiedades
+      const cleanedRow = {
+        Codigo: row.Codigo,
+        Asignatura: row['Asignatura '],
+        Semestre: row.Semestre,
+        Departamento: row.Departamento,
+        Salon: row['Salon '],
+        Dia: row.Dia,
+        Hora_Inicio: row.Hora_Inicio,
+        Hora_Fin: row.Hora_Fin,
+        No_Horas: row.No_Horas,
+        Fecha_Inicio: row.Fecha_Inicio,
+        Fecha_Fin: row.Fecha_Fin,
+        Sesiones: row.Sesiones,
+        Docente: row['Docente '],
+        Programa: row.Programa
+      };
+
+      try {
+        // Imprimir datos antes de la inserción
+        console.log('Processed data:', cleanedRow);
+
+        // Insertar en la tabla clases
+        const insertQuery = sql`
+          INSERT INTO public.clases (id_clase, asignatura, semestre, departamento, dia, horas, 
+            sesiones, docente, fecha_inicio, fecha_fin, hora_inicio, hora_fin, id_aula, programa
+          ) VALUES (${cleanedRow.Codigo}, ${cleanedRow.Asignatura}, ${cleanedRow.Semestre}, 
+            ${cleanedRow.Departamento}, ${cleanedRow.Dia}, ${cleanedRow.No_Horas}, 
+            ${cleanedRow.Sesiones}, ${cleanedRow.Docente}, ${cleanedRow.Fecha_Inicio}, 
+            ${cleanedRow.Fecha_Fin}, ${cleanedRow.Hora_Inicio}, ${cleanedRow.Hora_Fin}, 
+            ${cleanedRow.Salon}, ${cleanedRow.Programa}
+          )`;
+
+        await insertQuery;
+      } catch (error) {
+        console.error(`Error al procesar el archivo: ${error.message}`);
+        res.status(500).send('Error al procesar el archivo.');
+        return;
+      }
+    }
+
+    res.send('Archivo subido y procesado correctamente.');
+  } catch (error) {
+    console.error(`Error al procesar el archivo: ${error.message}`);
+    res.status(500).send('Error al procesar el archivo.');
+  }
+});
 
 // Iniciar el servidor
 app.listen(5000, () => {
