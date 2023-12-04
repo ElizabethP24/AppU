@@ -7,9 +7,6 @@
     <script src="js/validarCorreo.js"></script>
     <title>Validación Correo Electrónico</title>
 
-    <!-- Enlace a Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <!-- Tu hoja de estilo personalizada -->
     <link rel="stylesheet" href="/css/login.css">
 
@@ -23,17 +20,16 @@
 
     <div id="contenido">
         <div class="login-form">
-            <form action="">
+            <form>
 
-                <input type="text" name="correo_institucional" id="correo_institucional"
-                    placeholder="Correo electrónico institucional" required><br>
-                <button class="boton" onclick="validarCorreo()">Enviar</button>
-                <button onclick="window.history.back();" class="btn btn-secondary mt-3">Atrás</button>
+                <input type="email" name="correo_institucional" id="correo_institucional"
+                    placeholder="Correo electrónico institucional"><br>
+
+            </form>
+            <button class="boton" onclick="validarCorreo()">Enviar</button>
+            <button onclick="window.location.href='/index'">Atrás</button>
         </div>
 
-
-
-        </form>
     </div>
 
     <div id="pie">
@@ -49,8 +45,6 @@
 
     <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+
 
 </html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/validarCorreo.js"></script>
+
+    <title>Restablecer contraseña</title>
+
+
+    <!-- Tu hoja de estilo personalizada -->
+    <link rel="stylesheet" href="/css/rcontrasena.css">
+
+</head>
+
+<body>
+    <div id="banner">
+        <h1>Enviar Correo de recuperación</h1>
+        <img src="/img/Logo_claroU.png" alt="Logo">
+    </div>
+
+    <div id="contenido">
+        <div class="form-container">
+            <form id="form">
+
+                <input type="email" id="email" name="email" placeholder="Email">
+                <input type="text" id="documento" name="documento" placeholder="Documento">
+
+            </form>
+            <button class="boton" onclick="validarCorreoCambio()">Enviar</button>
+            <button onclick="window.location.href='/login'">Atrás</button>
+
+        </div>
+    </div>
+
+    <div id="pie">
+        <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas
+            Colombia.
+            Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm
+            Tel conmutador +57 6 8781500 / Fax 8781501 / Apartado aéreo 275 / Línea gratuita: 01-8000-512120
+            Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción
+            Email: atencionalciudadano@ucaldas.edu.co
+            Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co
+        </p>
+    </div>
+
+    <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+</body>
+
+</html>
