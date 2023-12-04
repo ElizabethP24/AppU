@@ -13,17 +13,11 @@ import xlsx from 'xlsx'; // Agregado para xlsx
 import multer from 'multer';
 import sql from './config/database.js'; // Asegúrate de ajustar la ruta correctamente
 
-
-
-// Importar la configuración de Passport
-
-
-
 // Crear la aplicación Express
 const debugApp = debug('app');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const upload = multer({ dest: 'uploads/' }); // Carpeta donde se almacenarán temporalmente los archivos
+const upload = multer({ dest: 'uploads/' }); // Carpeta donde se almacenarán temporalmente los archivo
 
 // Configuración de bodyParser y otras configuraciones de Express
 app.use(bodyParser.urlencoded({ extended: true }));
