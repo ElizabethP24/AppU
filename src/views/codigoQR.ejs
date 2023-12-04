@@ -42,6 +42,8 @@
       correctLevel: QRCode.CorrectLevel.L,
     });
 
+    const claveEncriptacion = "claveSecreta"; // La misma clave usada para cifrar y descifrar
+
     const data = {
       "sala": "Sala L",
       "horaEntrada": "09:00",
@@ -54,8 +56,14 @@
       const jsonData = JSON.stringify(data);
       const qrCodeLabel = "Datos del usuario";
 
-      qrcode.makeCode(jsonData, { label: qrCodeLabel });
+      // Encriptar los datos con AES
+      const encryptedData = CryptoJS.AES.encrypt(jsonData, claveEncriptacion).toString();
+
+      // Generar el código QR con los datos encriptados
+      qrcode.makeCode(encryptedData, { label: qrCodeLabel });
     });
+
+
 
 
   </script>

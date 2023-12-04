@@ -45,8 +45,31 @@
                                 canvas.width = video.width;
                                 canvas.height = video.height;
 
+                                const claveEncriptacion = "claveSecreta"; // La misma clave usada para cifrar
 
-                                // Rest of your code for QR scanning and decryption
+                                const qrScannerInterval = setInterval(() => {
+                                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                                    const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+                                    if (code) {
+                                        console.log(code.data);
+                                        clearInterval(qrScannerInterval);
+
+                                        try {
+                                            // Descifrar el código QR
+                                            const bytes = CryptoJS.AES.decrypt(code.data, claveEncriptacion);
+                                            const datosDescifrados = bytes.toString(CryptoJS.enc.Utf8);
+                                            console.log(JSON.parse(datosDescifrados));
+                                            // Aquí puedes utilizar los datos descifrados como desees
+                                        } catch (error) {
+                                            console.error("Error al descifrar el código QR:", error);
+                                        }
+
+                                        // Puedes redirigir a una URL o realizar acciones con los datos descifrados
+                                        // window.location.href = code.data;
+                                    }
+                                }, 1000 / 5);
 
                             } catch (error) {
                                 console.error('Error accessing the camera:', error);
@@ -54,6 +77,8 @@
                         }
 
                         startScanner();
+
+
 
                     </script>
                     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.0.0/dist/jsQR.min.js"></script>
