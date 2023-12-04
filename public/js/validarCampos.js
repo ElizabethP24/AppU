@@ -18,10 +18,10 @@ function validarCampos() {
         return false;
     }
     else if (!expresion_solo_texto.test(nombre)) {
-        alert("Ingrese solo valores de texto")
+        alert("Ingrese solo valores de texto en el nombre")
         return false;
     }
-    else if (documento.length >= 12) {
+    else if (documento.length >= 10) {
         alert("el documento es muy largo")
         return false;
     }
@@ -29,7 +29,7 @@ function validarCampos() {
         alert("la direccion es muy larga ")
         return false;
     }
-    else if (telefono.length >= 20) {
+    else if (telefono.length >= 10) {
         alert("el telefono es muy largo")
         return false;
     }
@@ -46,24 +46,18 @@ function validarCampos() {
         return false;
     }
     else if (!expresion_solo_texto.test(programa)) {
-        alert("Ingrese solo valores de texto")
+        alert("Ingrese solo valores de texto en el programa ")
         return false;
     }
     else if (!expresion_solo_texto.test(usuario)) {
-        alert("Ingrese solo valores de texto")
+        alert("Ingrese solo valores de texto en el usuario")
         return false;
     }
 
-    else if (contrasena == confirm_contrasena) {
-        // Mostrar mensaje indicando que las contraseñas coinciden
-        document.getElementById("error").innerHTML = "Las contraseñas coinciden";
-        document.getElementById("error").style.color = "green";
-    } else {
-        // Mostrar mensaje de error indicando que las contraseñas no coinciden
-        document.getElementById("error").innerHTML = "Las contraseñas no coinciden";
-        document.getElementById("error").style.color = "red";
-    }
+
 
 
 }
+
+
 

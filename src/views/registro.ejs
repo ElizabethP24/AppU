@@ -19,7 +19,7 @@
     </div>
     <div id="contenido">
         <form name="sentMessage" id="contactForm" novalidate="novalidate" action="/usuarios/crear" method="POST"
-            onsubmit="return validarCampos();">
+            onsubmit="validarCampos();">
 
             <div class="control-group">
                 <label for="nombre">Nombre:</label>
@@ -104,25 +104,23 @@
 
                 <label for="nombre">Contraseña:</label>
                 <input type="password" class="form-control p-4" id="contrasena" name="contrasena"
-                    placeholder="Contraseña" onchange="validarContrasena()" required="required"
+                    placeholder="Contraseña" required=" required"
                     data-validation-required-message="Por favor ingresar contraseña" />
-                <p class="help-block text-danger"></p>
-                <div id="error_container" class="error"></div>
+
 
                 <label for="nombre">Confirmar Contraseña:</label>
                 <input type="password" class="form-control p-4" id="confirm_contrasena" name="confirm_contrasena"
-                    placeholder="Confirmar Contraseña" onkeyup="validarContrasena()" required="required"
+                    placeholder="Confirmar Contraseña" required="required"
                     data-validation-required-message="Por favor confirmar contraseña" />
                 <p class="help-block text-danger"></p>
                 <div id="error_container" class="error"></div>
 
-                <script>
-                    validarContrasena();
-                    validarCampos();
-                </script>
 
-                <button type="submit" class="boton">Completar Registro</button>
+
             </div>
+            <button type="submit" class="boton" onclick=" return validarContrasena(),validarCampos();">Completar
+                Registro</button>
+            <button onclick=" window.history.back()">Atrás</button>
         </form>
     </div>
 

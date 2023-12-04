@@ -24,5 +24,6 @@ export async function getUser(username) {
     return usuarios[0] || null;
 }
 function obtenerNombreDeUsuario() {
-    return req.session.user.nombre; 
+    return req.session.user.nombre;
 }
+

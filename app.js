@@ -8,10 +8,6 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
 import { localStrategy } from './config/strategies/localStrategy.js';
-import bodyParser from 'body-parser';
-import xlsx from 'xlsx'; // Agregado para xlsx
-import multer from 'multer';
-import sql from './config/database.js'; // Asegúrate de ajustar la ruta correctamente
 
 // Crear la aplicación Express
 const debugApp = debug('app');
@@ -57,7 +53,7 @@ app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 // Rutas de ejemplo
-app.get('/', (req, res) => {
+app.get('/index', (req, res) => {
   res.render('index');
 });
 
@@ -77,6 +73,9 @@ app.get('/rcontrasena', (req, res) => {
   res.render('rcontrasena');
 });
 
+app.get('/enviarCorreo', (req, res) => {
+  res.render('EnviarCorreo');
+});
 app.get('/administrador', (req, res) => {
   res.render('vista_administrador');
 });
@@ -118,13 +117,13 @@ app.use('/public', express.static('public'));
 // Primero define ensureAuthenticated
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-      return next();
+    return next();
   }
   res.redirect('/login');
 }
 
 // Rutas que requieren autenticación
-app.get('/estudiante', ensureAuthenticated, function(req, res) {
+app.get('/estudiante', ensureAuthenticated, function (req, res) {
   res.render('vista_estudiante', { user: req.user });
 });
 

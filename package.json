@@ -16,6 +16,8 @@
     "@fullcalendar/interaction": "^6.1.4",
     "@fullcalendar/list": "^6.1.4",
     "@fullcalendar/timegrid": "^6.1.4",
+    "@sendgrid/mail": "^7.7.0",
+    "body-parser": "^1.20.2",
     "chalk": "^5.2.0",
     "code": "^5.2.4",
     "cookie-parser": "^1.4.6",

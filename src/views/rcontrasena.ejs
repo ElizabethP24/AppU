@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/validarCorreo.js"></script>
-    <title>Validación Correo Electrónico</title>
+    <title>Restablecer contraseña</title>
 
-    <!-- Enlace a Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <!-- Tu hoja de estilo personalizada -->
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/rcontrasena.css">
 
 </head>
+
 <body>
     <div id="banner">
-        <h1>Validación Correo Electrónico</h1>
+        <h1>Restablecer contraseña</h1>
         <img src="/img/Logo_claroU.png" alt="Logo">
     </div>
 
     <div id="contenido">
         <div class="form-container">
             <form id="form">
-                 <h2>Restablecer contraseña</h2><br>
-            <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
-            <input type="password" id="password" name="password" placeholder="Nueva Contraseña" required>
-            <input type="password1" id="password1" name="password1" placeholder="Confirmar contraseña" required>
-            <button type="submit">Enviar</button>
-        </form>
-    </div>
+
+
+                <input type="password" id="password" name="password" placeholder="Nueva Contraseña" required>
+                <input type="password1" id="password1" name="password1" placeholder="Confirmar contraseña" required>
+                <button type="submit">Enviar</button>
+                <button onclick="window.location.href='/rcontrasena'">
+                    <a href="/enviarCorreo" style="text-decoration: none; color: inherit;">Atras</a>
+                </button>
+            </form>
+        </div>
     </div>
 
     <div id="pie">
-        <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas Colombia. 
-            Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm 
+        <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas
+            Colombia.
+            Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm
             Tel conmutador +57 6 8781500 / Fax 8781501 / Apartado aéreo 275 / Línea gratuita: 01-8000-512120
-            Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción 
-            Email: atencionalciudadano@ucaldas.edu.co 
-            Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co 
+            Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción
+            Email: atencionalciudadano@ucaldas.edu.co
+            Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co
         </p>
     </div>
 
     <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
+
 </html>
