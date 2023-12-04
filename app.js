@@ -8,6 +8,10 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
 import { localStrategy } from './config/strategies/localStrategy.js';
+import bodyParser from 'body-parser';
+import xlsx from 'xlsx'; // Agregado para xlsx
+import multer from 'multer';
+import sql from './config/database.js'; // Asegúrate de ajustar la ruta correctamente
 
 // Crear la aplicación Express
 const debugApp = debug('app');
@@ -53,7 +57,7 @@ app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 // Rutas de ejemplo
-app.get('/index', (req, res) => {
+app.get('/', (req, res) => {
   res.render('index');
 });
 
@@ -73,9 +77,6 @@ app.get('/rcontrasena', (req, res) => {
   res.render('rcontrasena');
 });
 
-app.get('/enviarCorreo', (req, res) => {
-  res.render('EnviarCorreo');
-});
 app.get('/administrador', (req, res) => {
   res.render('vista_administrador');
 });
@@ -117,13 +118,13 @@ app.use('/public', express.static('public'));
 // Primero define ensureAuthenticated
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    return next();
+      return next();
   }
   res.redirect('/login');
 }
 
 // Rutas que requieren autenticación
-app.get('/estudiante', ensureAuthenticated, function (req, res) {
+app.get('/estudiante', ensureAuthenticated, function(req, res) {
   res.render('vista_estudiante', { user: req.user });
 });
 
@@ -145,78 +146,78 @@ app.post('/subir', upload.single('archivo'), async (req, res) => {
 
     // Iterar sobre los datos y realizar las inserciones
     for (const row of data) {
-      // Corregir nombres de propiedades
-      const cleanedRow = {
-        Codigo: row.Codigo,
-        Asignatura: row['Asignatura '],
-        Semestre: row.Semestre,
-        Departamento: row.Departamento,
-        Salon: row['Salon '],
-        Dia: row.Dia,
-        Hora_Inicio: row.Hora_Inicio,
-        Hora_Fin: row.Hora_Fin,
-        No_Horas: row.No_Horas,
-        // Formatear fecha de inicio
-        Fecha_Inicio: new Date((row.Fecha_Inicio - 25569) * 86400 * 1000).toISOString().split('T')[0],
-        // Formatear fecha de fin
-        Fecha_Fin: new Date((row.Fecha_Fin - 25569) * 86400 * 1000).toISOString().split('T')[0],
-        Sesiones: row.Sesiones,
-        Docente: row['Docente '],
-        Programa: row.Programa
-      };
-    
-      try {
-        // Validar si hay una id_clase repetida
-        const existingId = await sql`
-          SELECT id_clase FROM public.clases WHERE id_clase = ${cleanedRow.Codigo}
-        `;
-    
-        if (existingId.length > 0) {
-          // Si la id_clase ya existe, realizar una actualización (UPDATE) en lugar de inserción (INSERT)
-          const updateQuery = sql`
-            UPDATE public.clases
-            SET asignatura = ${cleanedRow.Asignatura},
-                semestre = ${cleanedRow.Semestre},
-                departamento = ${cleanedRow.Departamento},
-                dia = ${cleanedRow.Dia},
-                horas = ${cleanedRow.No_Horas},
-                sesiones = ${cleanedRow.Sesiones},
-                docente = ${cleanedRow.Docente},
-                fecha_inicio = ${cleanedRow.Fecha_Inicio},
-                fecha_fin = ${cleanedRow.Fecha_Fin},
-                hora_inicio = ${cleanedRow.Hora_Inicio},
-                hora_fin = ${cleanedRow.Hora_Fin},
-                id_aula = ${cleanedRow.Salon},
-                programa = ${cleanedRow.Programa}
-            WHERE id_clase = ${cleanedRow.Codigo}
-          `;
-    
-          await updateQuery;
-        } else {
-          // Si la id_clase no existe, realizar una inserción (INSERT)
-          const insertQuery = sql`
-            INSERT INTO public.clases (id_clase, asignatura, semestre, departamento, dia, horas, 
-              sesiones, docente, fecha_inicio, fecha_fin, hora_inicio, hora_fin, id_aula, programa
-            ) VALUES (${cleanedRow.Codigo}, ${cleanedRow.Asignatura}, ${cleanedRow.Semestre}, 
-              ${cleanedRow.Departamento}, ${cleanedRow.Dia}, ${cleanedRow.No_Horas}, 
-              ${cleanedRow.Sesiones}, ${cleanedRow.Docente}, ${cleanedRow.Fecha_Inicio}, 
-              ${cleanedRow.Fecha_Fin}, ${cleanedRow.Hora_Inicio}, ${cleanedRow.Hora_Fin}, 
-              ${cleanedRow.Salon}, ${cleanedRow.Programa}
-            )`;
-      
-          await insertQuery;
-        }
-    
-        // Imprimir datos después de la inserción/actualización
-        console.log('Processed data:', cleanedRow);
-    
-      } catch (error) {
-        console.error(`Error al procesar el archivo: ${error.message}`);
-        res.status(500).send('Error al procesar el archivo.');
-        return;
-      }
+  // Corregir nombres de propiedades
+  const cleanedRow = {
+    Codigo: row.Codigo,
+    Asignatura: row['Asignatura '],
+    Semestre: row.Semestre,
+    Departamento: row.Departamento,
+    Salon: row['Salon '],
+    Dia: row.Dia,
+    Hora_Inicio: row.Hora_Inicio,
+    Hora_Fin: row.Hora_Fin,
+    No_Horas: row.No_Horas,
+    // Formatear fecha de inicio
+    Fecha_Inicio: new Date((row.Fecha_Inicio - 25569) * 86400 * 1000).toISOString().split('T')[0],
+    // Formatear fecha de fin
+    Fecha_Fin: new Date((row.Fecha_Fin - 25569) * 86400 * 1000).toISOString().split('T')[0],
+    Sesiones: row.Sesiones,
+    Docente: row['Docente '],
+    Programa: row.Programa
+  };
+
+  try {
+    // Validar si hay una id_clase repetida
+    const existingId = await sql`
+      SELECT id_clase FROM public.clases WHERE id_clase = ${cleanedRow.Codigo}
+    `;
+
+    if (existingId.length > 0) {
+      // Si la id_clase ya existe, realizar una actualización (UPDATE) en lugar de inserción (INSERT)
+      const updateQuery = sql`
+        UPDATE public.clases
+        SET asignatura = ${cleanedRow.Asignatura},
+            semestre = ${cleanedRow.Semestre},
+            departamento = ${cleanedRow.Departamento},
+            dia = ${cleanedRow.Dia},
+            horas = ${cleanedRow.No_Horas},
+            sesiones = ${cleanedRow.Sesiones},
+            docente = ${cleanedRow.Docente},
+            fecha_inicio = ${cleanedRow.Fecha_Inicio},
+            fecha_fin = ${cleanedRow.Fecha_Fin},
+            hora_inicio = ${cleanedRow.Hora_Inicio},
+            hora_fin = ${cleanedRow.Hora_Fin},
+            id_aula = ${cleanedRow.Salon},
+            programa = ${cleanedRow.Programa}
+        WHERE id_clase = ${cleanedRow.Codigo}
+      `;
+
+      await updateQuery;
+    } else {
+      // Si la id_clase no existe, realizar una inserción (INSERT)
+      const insertQuery = sql`
+        INSERT INTO public.clases (id_clase, asignatura, semestre, departamento, dia, horas, 
+          sesiones, docente, fecha_inicio, fecha_fin, hora_inicio, hora_fin, id_aula, programa
+        ) VALUES (${cleanedRow.Codigo}, ${cleanedRow.Asignatura}, ${cleanedRow.Semestre}, 
+          ${cleanedRow.Departamento}, ${cleanedRow.Dia}, ${cleanedRow.No_Horas}, 
+          ${cleanedRow.Sesiones}, ${cleanedRow.Docente}, ${cleanedRow.Fecha_Inicio}, 
+          ${cleanedRow.Fecha_Fin}, ${cleanedRow.Hora_Inicio}, ${cleanedRow.Hora_Fin}, 
+          ${cleanedRow.Salon}, ${cleanedRow.Programa}
+        )`;
+  
+      await insertQuery;
     }
-    
+
+    // Imprimir datos después de la inserción/actualización
+    console.log('Processed data:', cleanedRow);
+
+  } catch (error) {
+    console.error(`Error al procesar el archivo: ${error.message}`);
+    res.status(500).send('Error al procesar el archivo.');
+    return;
+  }
+}
+
 
     res.send('Archivo subido y procesado correctamente.');
   } catch (error) {
