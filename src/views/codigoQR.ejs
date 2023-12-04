@@ -50,24 +50,14 @@
       "codigoEncargado": "ABC123"
     };
 
-    const CHUNK_SIZE = 200;
-    const claveEncriptacion = "claveSecreta";
-
     btnGenerarQR.addEventListener('click', () => {
       const jsonData = JSON.stringify(data);
-      const totalChunks = Math.ceil(jsonData.length / CHUNK_SIZE);
+      const qrCodeLabel = "Datos del usuario";
 
-      for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
-        const start = chunkIndex * CHUNK_SIZE;
-        const end = (chunkIndex + 1) * CHUNK_SIZE;
-        const chunkData = jsonData.substring(start, end);
-
-        const qrCodeLabel = `Página ${chunkIndex + 1} de ${totalChunks}`;
-
-        const ciphertext = CryptoJS.AES.encrypt(chunkData, claveEncriptacion).toString();
-        qrcode.makeCode(ciphertext, { label: qrCodeLabel });
-      }
+      qrcode.makeCode(jsonData, { label: qrCodeLabel });
     });
+
+
   </script>
   <div id="pie">
     <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas
