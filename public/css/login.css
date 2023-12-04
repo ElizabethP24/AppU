@@ -37,6 +37,15 @@ body {
 
 }
 
+#conten {
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:30px;
+
+}
+
 #pie {
     background-image: url('/img/backgroundFooter.jpg');
     color: white;

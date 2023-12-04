@@ -110,7 +110,7 @@ app.get('/cargarArchivo', (req, res) => {
 });
 
 app.get('/salones', (req, res) => {
-  res.render('vista_salones');
+  res.render('calendario');
 });
 
 app.use('/public', express.static('public'));
@@ -157,35 +157,67 @@ app.post('/subir', upload.single('archivo'), async (req, res) => {
         Hora_Inicio: row.Hora_Inicio,
         Hora_Fin: row.Hora_Fin,
         No_Horas: row.No_Horas,
-        Fecha_Inicio: row.Fecha_Inicio,
-        Fecha_Fin: row.Fecha_Fin,
+        // Formatear fecha de inicio
+        Fecha_Inicio: new Date((row.Fecha_Inicio - 25569) * 86400 * 1000).toISOString().split('T')[0],
+        // Formatear fecha de fin
+        Fecha_Fin: new Date((row.Fecha_Fin - 25569) * 86400 * 1000).toISOString().split('T')[0],
         Sesiones: row.Sesiones,
         Docente: row['Docente '],
         Programa: row.Programa
       };
-
+    
       try {
-        // Imprimir datos antes de la inserción
+        // Validar si hay una id_clase repetida
+        const existingId = await sql`
+          SELECT id_clase FROM public.clases WHERE id_clase = ${cleanedRow.Codigo}
+        `;
+    
+        if (existingId.length > 0) {
+          // Si la id_clase ya existe, realizar una actualización (UPDATE) en lugar de inserción (INSERT)
+          const updateQuery = sql`
+            UPDATE public.clases
+            SET asignatura = ${cleanedRow.Asignatura},
+                semestre = ${cleanedRow.Semestre},
+                departamento = ${cleanedRow.Departamento},
+                dia = ${cleanedRow.Dia},
+                horas = ${cleanedRow.No_Horas},
+                sesiones = ${cleanedRow.Sesiones},
+                docente = ${cleanedRow.Docente},
+                fecha_inicio = ${cleanedRow.Fecha_Inicio},
+                fecha_fin = ${cleanedRow.Fecha_Fin},
+                hora_inicio = ${cleanedRow.Hora_Inicio},
+                hora_fin = ${cleanedRow.Hora_Fin},
+                id_aula = ${cleanedRow.Salon},
+                programa = ${cleanedRow.Programa}
+            WHERE id_clase = ${cleanedRow.Codigo}
+          `;
+    
+          await updateQuery;
+        } else {
+          // Si la id_clase no existe, realizar una inserción (INSERT)
+          const insertQuery = sql`
+            INSERT INTO public.clases (id_clase, asignatura, semestre, departamento, dia, horas, 
+              sesiones, docente, fecha_inicio, fecha_fin, hora_inicio, hora_fin, id_aula, programa
+            ) VALUES (${cleanedRow.Codigo}, ${cleanedRow.Asignatura}, ${cleanedRow.Semestre}, 
+              ${cleanedRow.Departamento}, ${cleanedRow.Dia}, ${cleanedRow.No_Horas}, 
+              ${cleanedRow.Sesiones}, ${cleanedRow.Docente}, ${cleanedRow.Fecha_Inicio}, 
+              ${cleanedRow.Fecha_Fin}, ${cleanedRow.Hora_Inicio}, ${cleanedRow.Hora_Fin}, 
+              ${cleanedRow.Salon}, ${cleanedRow.Programa}
+            )`;
+      
+          await insertQuery;
+        }
+    
+        // Imprimir datos después de la inserción/actualización
         console.log('Processed data:', cleanedRow);
-
-        // Insertar en la tabla clases
-        const insertQuery = sql`
-          INSERT INTO public.clases (id_clase, asignatura, semestre, departamento, dia, horas, 
-            sesiones, docente, fecha_inicio, fecha_fin, hora_inicio, hora_fin, id_aula, programa
-          ) VALUES (${cleanedRow.Codigo}, ${cleanedRow.Asignatura}, ${cleanedRow.Semestre}, 
-            ${cleanedRow.Departamento}, ${cleanedRow.Dia}, ${cleanedRow.No_Horas}, 
-            ${cleanedRow.Sesiones}, ${cleanedRow.Docente}, ${cleanedRow.Fecha_Inicio}, 
-            ${cleanedRow.Fecha_Fin}, ${cleanedRow.Hora_Inicio}, ${cleanedRow.Hora_Fin}, 
-            ${cleanedRow.Salon}, ${cleanedRow.Programa}
-          )`;
-
-        await insertQuery;
+    
       } catch (error) {
         console.error(`Error al procesar el archivo: ${error.message}`);
         res.status(500).send('Error al procesar el archivo.');
         return;
       }
     }
+    
 
     res.send('Archivo subido y procesado correctamente.');
   } catch (error) {
