@@ -11,7 +11,7 @@ import { localStrategy } from './config/strategies/localStrategy.js';
 import bodyParser from 'body-parser';
 import xlsx from 'xlsx'; // Agregado para xlsx
 import multer from 'multer';
-import sql from './config/database.js'; // Asegúrate de ajustar la ruta correctamente
+import sql from './config/database.js'; 
 
 // Crear la aplicación Express
 const debugApp = debug('app');

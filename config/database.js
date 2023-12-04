@@ -1,9 +1,9 @@
 import postgres from 'postgres';
 
 const sql = postgres({
-    database: 'APPU',
+    database: 'AppUcaldas',
     user: 'postgres',
-    password: '1124'
+    password: 'admin'
 });// will use psql environment variables
 
 export default sql;
