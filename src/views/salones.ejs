@@ -1,55 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
-     <!-- Enlace a Bootstrap CSS -->
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/login.css">
-    
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Archivos de estilo -->
+  <link href="/css/prueba.css" rel="stylesheet">
+
+  <title>Calendario</title>
 </head>
 
 <body>
-    <div id="banner">
-        <h1>Horario de Clases</h1>
-        <img src="/img/Logo_claroU.png" alt="Logo">
+  <div id="container">
+    <div id="header">
+      <div id="monthDisplay"></div>
+      <div>
+        <button id="backButton">Anterior</button>
+        <button id="nextButton">Siguiente</button>
+      </div>
     </div>
 
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
-    <script>
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-        });
-        calendar.render();
-      });
-
-    </script>
-   
-    <div style="max-width: 1000px; margin: auto" id='calendar'></div>
-    <script type="module" src="/js/calendar.js"></script>
-    
-    <div id="pie">
-        <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas
-            Colombia.
-            Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm
-            Tel conmutador +57 6 8781500 / Fax 8781501 / Apartado aéreo 275 / Línea gratuita: 01-8000-512120
-            Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción
-            Email: atencionalciudadano@ucaldas.edu.co
-            Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co
-        </p>
+    <div id="weekdays">
+      <div>Domingo</div>
+      <div>Lunes</div>
+      <div>Martes</div>
+      <div>Miércoles</div>
+      <div>Jueves</div>
+      <div>Viernes</div>
+      <div>Sábado</div>
     </div>
 
-    <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <div id="calendar"></div>
+  </div>
+
+  <div id="newEventModal">
+    <h2>Nuevo Evento</h2>
+    <input id="eventTitleInput" placeholder="Codigo"/>
+    <input id="salon" placeholder="Salon"/>
+    <input id="asignatura" placeholder="Asignatura"/>
+    <input id="hora_entrada" placeholder="Hora Entrada"/>
+    <input id="hora_salida" placeholder="Hora Salida"/>
+    <input id="encargado" placeholder="Encargado"/>
+    <button id="saveButton">Guardar</button>
+    <button id="cancelButton">Cancelar</button>
+  </div>
+  
+  <div id="deleteEventModal">
+    <h2>Evento</h2>
+    <div id="eventText"></div><br>
+    <button id="deleteButton">Borrar</button>
+    <button id="closeButton">Cerrar</button>
+    <button id="generateQRButton">Código QR</button>
+  </div>
+
+  <div id="modalBackDrop"></div>
+
+  <script src="/js/princiapl.js"></script>
+
+  <script>
+    document.getElementById('generateQRButton').addEventListener('click', () => {
+      const salon = document.getElementById('salon').value;
+      const asignatura = document.getElementById('asignatura').value;
+      const horaEntrada = document.getElementById('hora_entrada').value;
+      const horaSalida = document.getElementById('hora_salida').value;
+      const encargado = document.getElementById('encargado').value;
+  
+      const eventData = {
+        sala: salon,
+        asignatura: asignatura,
+        horaEntrada: horaEntrada,
+        horaSalida: horaSalida,
+        encargado: encargado
+      };
+  
+      // Convertir a JSON
+      const jsonData = JSON.stringify(eventData);
+  
+      // Enviar a la otra página (reemplaza 'otraPagina.html' con la URL real)
+      console.log(`/codigoQR?data=${encodeURIComponent(jsonData)}`);
+      window.location.href = `/codigoQR?data=${encodeURIComponent(jsonData)}`;
+      
+    });
+  </script>
 </body>
 
 </html>

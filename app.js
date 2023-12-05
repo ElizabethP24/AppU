@@ -132,6 +132,10 @@ app.get('/salones', (req, res) => {
   res.render('calendario');
 });
 
+app.get('/horario', (req, res) => {
+  res.render('salones');
+});
+
 app.use('/public', express.static('public'));
 
 // Primero define ensureAuthenticated
@@ -210,6 +214,7 @@ function validarDatos(correo, documento) {
   return true;
 }
 
+app.use('/config', express.static('config'));
 
 app.post('/subir', upload.single('archivo'), async (req, res) => {
   try {
