@@ -21,7 +21,7 @@ function validarCampos() {
         alert("Ingrese solo valores de texto en el nombre")
         return false;
     }
-    else if (documento.length >= 10) {
+    else if (documento.length >= 11) {
         alert("el documento es muy largo")
         return false;
     }
