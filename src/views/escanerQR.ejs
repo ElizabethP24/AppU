@@ -53,11 +53,16 @@
                                     context.drawImage(video, 0, 0, canvas.width, canvas.height);
                                     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
                                     const code = jsQR(imageData.data, canvas.width, canvas.height);
-
+                            
                                     if (code) {
                                         console.log(code.data);
+                            
+                                        // Decodificar la URL antes de redirigir
+                                        const decodedData = decodeURIComponent(code.data);
+                                        console.log(decodedData);
+                            
                                         clearInterval(qrScannerInterval);
-                                        window.location.href = code.data;
+                                        window.location.href = decodedData;
                                     }
                                 }, 1000 / 5);
 
