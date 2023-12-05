@@ -29,7 +29,7 @@ function validarCampos() {
         alert("la direccion es muy larga ")
         return false;
     }
-    else if (telefono.length >= 10) {
+    else if (telefono.length >= 11) {
         alert("el telefono es muy largo")
         return false;
     }
@@ -53,7 +53,6 @@ function validarCampos() {
         alert("Ingrese solo valores de texto en el usuario")
         return false;
     }
-
 
 
 
