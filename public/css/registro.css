@@ -119,12 +119,11 @@ form select option[disabled] {
     color: black;
 }
 
-label {
+form label {
     background-color: #bbe1fa;
     color: black;
     outline: none;
-
-    font-size: 30px;
+    font-size: 20px;
 }
 
 button {
@@ -148,6 +147,18 @@ button:hover {
 }
 
 
+#checkbox {
+    display: flex;
+    justify-content: space-between;
+
+    /* Espacio entre el checkbox y el texto del label */
+}
+
+#checkbox label {
+    font-size: 20px;
+
+    /* Espacio entre el checkbox y el texto del label */
+}
 
 
 /* Media query para ajustar estilos en pantallas más pequeñas */

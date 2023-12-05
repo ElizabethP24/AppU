@@ -12,6 +12,7 @@ function validarCampos() {
     expresion_solo_texto = /^[A-Za-zÁáÉéÍíÓóÚúñÑ\s]+$/;
     var contrasena = document.getElementById("contrasena").value;
     var confirm_contrasena = document.getElementById("confirm_contrasena").value;
+    var terminosCheckbox = document.getElementById("terminos_condiciones");
 
     if (nombre === "" || documento === "" || direccion === "" || telefono === "" || correo === "") {
         alert("debe rellenar todos los campos")
@@ -54,6 +55,10 @@ function validarCampos() {
         return false;
     }
 
+    else if (!terminosCheckbox.checked) {
+        alert("Debes aceptar los términos y condiciones");
+        return false;
+    }
 
 
 }

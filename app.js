@@ -12,6 +12,7 @@ import bodyParser from 'body-parser';
 import xlsx from 'xlsx'; // Agregado para xlsx
 import multer from 'multer';
 import sql from './config/database.js'; 
+import sql from './config/database.js';
 
 // Crear la aplicación Express
 const debugApp = debug('app');
@@ -19,6 +20,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const upload = multer({ dest: 'uploads/' }); // Carpeta donde se almacenarán temporalmente los archivo
  
+
 // Configuración de bodyParser y otras configuraciones de Express
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -71,6 +73,9 @@ app.get('/enviarCorreo', (req, res) => {
 
 app.get('/TerminosyCondiciones', (req, res) => {
   res.render('terminosycondiciones');
+});
+app.get('/vistaUsuarios', (req, res) => {
+  res.render('vistaUsuarios');
 });
 
 app.get('/validar', (req, res) => {
@@ -130,13 +135,13 @@ app.use('/public', express.static('public'));
 // Primero define ensureAuthenticated
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-      return next();
+    return next();
   }
   res.redirect('/login');
 }
 
 // Rutas que requieren autenticación
-app.get('/estudiante', ensureAuthenticated, function(req, res) {
+app.get('/estudiante', ensureAuthenticated, function (req, res) {
   res.render('vista_estudiante', { user: req.user });
 });
 
@@ -218,35 +223,35 @@ app.post('/subir', upload.single('archivo'), async (req, res) => {
 
     // Iterar sobre los datos y realizar las inserciones
     for (const row of data) {
-  // Corregir nombres de propiedades
-  const cleanedRow = {
-    Codigo: row.Codigo,
-    Asignatura: row['Asignatura '],
-    Semestre: row.Semestre,
-    Departamento: row.Departamento,
-    Salon: row['Salon '],
-    Dia: row.Dia,
-    Hora_Inicio: row.Hora_Inicio,
-    Hora_Fin: row.Hora_Fin,
-    No_Horas: row.No_Horas,
-    // Formatear fecha de inicio
-    Fecha_Inicio: new Date((row.Fecha_Inicio - 25569) * 86400 * 1000).toISOString().split('T')[0],
-    // Formatear fecha de fin
-    Fecha_Fin: new Date((row.Fecha_Fin - 25569) * 86400 * 1000).toISOString().split('T')[0],
-    Sesiones: row.Sesiones,
-    Docente: row['Docente '],
-    Programa: row.Programa
-  };
+      // Corregir nombres de propiedades
+      const cleanedRow = {
+        Codigo: row.Codigo,
+        Asignatura: row['Asignatura '],
+        Semestre: row.Semestre,
+        Departamento: row.Departamento,
+        Salon: row['Salon '],
+        Dia: row.Dia,
+        Hora_Inicio: row.Hora_Inicio,
+        Hora_Fin: row.Hora_Fin,
+        No_Horas: row.No_Horas,
+        // Formatear fecha de inicio
+        Fecha_Inicio: new Date((row.Fecha_Inicio - 25569) * 86400 * 1000).toISOString().split('T')[0],
+        // Formatear fecha de fin
+        Fecha_Fin: new Date((row.Fecha_Fin - 25569) * 86400 * 1000).toISOString().split('T')[0],
+        Sesiones: row.Sesiones,
+        Docente: row['Docente '],
+        Programa: row.Programa
+      };
 
-  try {
-    // Validar si hay una id_clase repetida
-    const existingId = await sql`
+      try {
+        // Validar si hay una id_clase repetida
+        const existingId = await sql`
       SELECT id_clase FROM public.clases WHERE id_clase = ${cleanedRow.Codigo}
     `;
 
-    if (existingId.length > 0) {
-      // Si la id_clase ya existe, realizar una actualización (UPDATE) en lugar de inserción (INSERT)
-      const updateQuery = sql`
+        if (existingId.length > 0) {
+          // Si la id_clase ya existe, realizar una actualización (UPDATE) en lugar de inserción (INSERT)
+          const updateQuery = sql`
         UPDATE public.clases
         SET asignatura = ${cleanedRow.Asignatura},
             semestre = ${cleanedRow.Semestre},
@@ -264,10 +269,10 @@ app.post('/subir', upload.single('archivo'), async (req, res) => {
         WHERE id_clase = ${cleanedRow.Codigo}
       `;
 
-      await updateQuery;
-    } else {
-      // Si la id_clase no existe, realizar una inserción (INSERT)
-      const insertQuery = sql`
+          await updateQuery;
+        } else {
+          // Si la id_clase no existe, realizar una inserción (INSERT)
+          const insertQuery = sql`
         INSERT INTO public.clases (id_clase, asignatura, semestre, departamento, dia, horas, 
           sesiones, docente, fecha_inicio, fecha_fin, hora_inicio, hora_fin, id_aula, programa
         ) VALUES (${cleanedRow.Codigo}, ${cleanedRow.Asignatura}, ${cleanedRow.Semestre}, 
@@ -276,10 +281,21 @@ app.post('/subir', upload.single('archivo'), async (req, res) => {
           ${cleanedRow.Fecha_Fin}, ${cleanedRow.Hora_Inicio}, ${cleanedRow.Hora_Fin}, 
           ${cleanedRow.Salon}, ${cleanedRow.Programa}
         )`;
-  
-      await insertQuery;
+
+          await insertQuery;
+        }
+
+        // Imprimir datos después de la inserción/actualización
+        console.log('Processed data:', cleanedRow);
+
+      } catch (error) {
+        console.error(`Error al procesar el archivo: ${error.message}`);
+        res.status(500).send('Error al procesar el archivo.');
+        return;
+      }
     }
 
+<<<<<<< HEAD
     // Imprimir datos después de la inserción/actualización
     console.log('Processed data:', cleanedRow);
 
@@ -289,6 +305,9 @@ app.post('/subir', upload.single('archivo'), async (req, res) => {
     return;
   }
 }
+=======
+
+>>>>>>> 9bfd4fa85fbec1981cb2f215271e1587ccdd4030
     res.send('Archivo subido y procesado correctamente.');
   } catch (error) {
     console.error(`Error al procesar el archivo: ${error.message}`);
