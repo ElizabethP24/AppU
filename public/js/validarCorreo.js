@@ -16,17 +16,24 @@ function validarCorreo() {
 function validarCorreoCambio() {
     var correo = document.getElementById("email").value;
     var dominio = "@ucaldas.edu.co";
+    var documento = document.getElementById("documento").value;
 
-    if (correo === "") {
-        alert("Por favor, ingrese su correo electrónico institucional.");
-    } else if (correo.indexOf(dominio) === -1) {
+    if (documento === "" || correo === "") {
+        alert("debe de llenar todos los campos")
+        return false;
+    }
+
+    if (documento.length >= 11) {
+        alert("el documento es muy largo")
+        return false;
+    }
+    else if (correo.indexOf(dominio) === -1) {
         alert("Por favor, ingrese un correo electrónico válido.");
     } else {
         alert("Correo electrónico válido. Redirigiendo...");
         window.location.href = "/rcontrasena";
     }
 }
-
 
 
 
