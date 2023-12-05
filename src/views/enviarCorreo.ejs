@@ -19,19 +19,18 @@
         <img src="/img/Logo_claroU.png" alt="Logo">
     </div>
 
+    <!-- rcontrasena.ejs -->
     <div id="contenido">
         <div class="form-container">
-            <form id="form">
-
-                <input type="email" id="email" name="email" placeholder="Email">
+            <form id="form" action="/rcontrasena" method="POST">
+                <input type="email" id="email" name="correo" placeholder="Email">
                 <input type="text" id="documento" name="documento" placeholder="Documento">
-
+                <button class="boton" type="submit">Enviar</button>
+                <button onclick="window.location.href='/login'">Atrás</button>
             </form>
-            <button class="boton" onclick="validarCambio()">Enviar</button>
-            <button onclick="window.location.href='/login'">Atrás</button>
-
         </div>
     </div>
+
 
     <div id="pie">
         <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas

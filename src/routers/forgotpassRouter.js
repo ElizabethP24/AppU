@@ -1,23 +1,37 @@
-import sql from '../../config/database.js';
 
-forgotpass.post('/rcontrasena', async (req, res) => {
+import sql from '../../config/database.js';
+import express from "express";
+const forgotpassRouter = express.Router();
+// Cambia el nombre del enrutador
+
+// Agrega la ruta para verificar correo y documento en el enrutador forgotpassRouter
+forgotpassRouter.post('/verificar-correo-documento', async (req, res) => {
+    const { correo, documento } = req.body;
     try {
-        const { correo, documento } = req.body;
-        const usuarios = await sql`
+        const result = await sql`
             SELECT * FROM personal_u 
             WHERE correo = ${correo} AND documento = ${documento};
         `;
 
-        if (usuarios.count > 0) {
-            // Renderizar la vista 'rcontrasena.ejs'
-            res.render('rcontrasena', { usuarios });
+        if (result.count > 0) {
+            // Si se encuentra el correo y el documento en la base de datos, redirige a '/rcontrasena'
+            res.redirect('/rcontrasena');
         } else {
-            res.send("La información es incorrecta");
+            // Si no se encuentran, envía un mensaje de error o redirige a otra página
+            res.send("Correo o documento no encontrados");
         }
     } catch (error) {
-        console.error("Error al verificar usuario:", error.message);
-        res.status(500).send("Hubo un error al verificar el usuario");
+        console.error("Error al verificar el correo y documento:", error.message);
+        res.status(500).send("Error al verificar el correo y documento");
     }
 });
+
+
+
+export default forgotpassRouter;
+
+
+
+
 
 

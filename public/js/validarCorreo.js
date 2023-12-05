@@ -49,24 +49,14 @@ async function validarCambio() {
     if (documento.length >= 11) {
         alert("El documento es muy largo");
         return false;
+    } else if (correo.indexOf(dominio) === -1) {
+        alert("Por favor, ingrese un correo electrónico válido.");
+    } else {
+        alert("Correo electrónico válido. Redirigiendo...");
+        window.location.href = "/rcontrasena";
     }
 
-    try {
-        const result = await sql`
-            SELECT * FROM personal_u 
-            WHERE correo = ${correo} AND documento = ${documento};
-        `;
 
-        if (result.count > 0) {
-            alert("Correo electrónico y documento válidos. Redirigiendo...");
-            window.location.href = "/rcontrasena";
-        } else {
-            alert("Los datos no son correctos. Verifique su correo y documento.");
-        }
-    } catch (error) {
-        console.error("Error al consultar la base de datos:", error);
-        alert("Ocurrió un error al validar los datos. Por favor, inténtelo de nuevo.");
-    }
 }
 
 
