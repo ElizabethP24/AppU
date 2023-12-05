@@ -6,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingreso por Código QR a las Aulas de Clase</title>
 
-    <!-- Enlace a Bootstrap CSS -->
-
 
     <!-- Tu hoja de estilo personalizada -->
-    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/vistaUsuario.css">
 
 </head>
 
@@ -21,12 +19,39 @@
     </div>
 
     <div id="contenido">
-        <button class="boton" onclick="location.href='/validar'">Registro</button>
-        <button class="boton" onclick="location.href='/vistaUsuarios'">Usuarios</button>
-        <button class="boton" onclick="location.href='/salones'">Salones</button>
-        <button class="boton" onclick="location.href='/cargarArchivo'">Cargar Horario</button>
-        <button class="boton" onclick="location.href='/escanerQR'">Escaner</button>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Documento</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Facultad</th>
+                    <th>Semestre</th>
+                    <th>Programa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí puedes agregar filas con datos, por ejemplo: -->
+                <tr>
+                    <td>Nombre Ejemplo</td>
+                    <td>1234567890</td>
+                    <td>Dirección Ejemplo</td>
+                    <td>123-456-7890</td>
+                    <td>correo@example.com</td>
+                    <td>Estudiante</td>
+                    <td>FACULTAD</td>
+                    <td>5</td>
+                    <td>Programa Ejemplo</td>
+                </tr>
+                <!-- Puedes agregar más filas con datos aquí -->
+            </tbody>
+        </table>
+        <button onclick="window.location.href='/administrador'">Atrás</button>
     </div>
+
 
     <div id="pie">
         <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas
