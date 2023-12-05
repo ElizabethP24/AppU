@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escaner QR</title>
     <!-- Enlace a Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/registro.css">
+
+    <link rel="stylesheet" href="/css/codigoQR.css">
 </head>
 
 <body>
@@ -16,81 +16,85 @@
         <img src="/img/Logo_claroU.png" alt="Logo">
     </div>
 
-    <div class="container-fluid pt-5">
-        <div class="d-flex flex-column text-center mb-5 pt-5">
 
-            <main class="container">
-                <h2>Saca tu teléfono y escanea el código QR</h2>
-                <video id="qr-scanner" width="300" height="300" playsinline autoplay></video>
-            </main>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-12 col-sm-8 mb-5">
-                <div class="contact-form">
-                    <div id="success"></div>
 
-                    <script>
-                        async function startScanner() {
-                            const video = document.getElementById('qr-scanner');
+    <div id="contenido">
+        <h2>Saca tu teléfono y escanea el código QR</h2>
+        <video id="qr-scanner" width="100" height="150" playsinline autoplay></video>
+        <div id="qr-data"></div>
 
-                            try {
-                                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-                                video.srcObject = stream;
+    </div>
 
-                                const track = stream.getVideoTracks()[0];
-                                const canvas = document.createElement('canvas');
-                                const context = canvas.getContext('2d');
+    <script>
+        async function startScanner() {
+            const video = document.getElementById('qr-scanner');
 
-                                canvas.width = video.width;
-                                canvas.height = video.height;
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                video.srcObject = stream;
 
-                                const cryptoKey = "claveSecreta"; // La misma clave usada para cifrar y descifrar
+                const track = stream.getVideoTracks()[0];
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                let qrCodeInterval;
 
-                                video.addEventListener('loadeddata', () => {
-                                    setInterval(() => {
-                                        context.drawImage(video, 0, 0, video.width, video.height);
-                                        const imageData = context.getImageData(0, 0, video.width, video.height);
-                                        const code = jsQR(imageData.data, imageData.width, imageData.height);
+                video.addEventListener('loadedmetadata', () => {
+                    const aspectRatio = video.videoWidth / video.videoHeight;
 
-                                        if (code) {
-                                            try {
-                                                const decryptedData = CryptoJS.AES.decrypt(code.data, cryptoKey).toString(CryptoJS.enc.Utf8);
-                                                console.log(JSON.parse(decryptedData));
-                                                // Aquí puedes trabajar con el JSON desencriptado, por ejemplo, mostrarlo en la interfaz.
-                                            } catch (error) {
-                                                console.error('Error al desencriptar el código QR:', error);
-                                            }
-                                        }
-                                    }, 1000);
-                                });
-                            } catch (error) {
-                                console.error('Error accessing the camera:', error);
-                            }
+                    const width = 300; // Establece el ancho deseado para el lector
+                    const height = width / aspectRatio;
+
+                    video.width = width;
+                    video.height = height;
+                    canvas.width = width;
+                    canvas.height = height;
+                });
+
+                video.addEventListener('loadeddata', () => {
+                    qrCodeInterval = setInterval(() => {
+                        context.drawImage(video, 0, 0, video.width, video.height);
+                        const imageData = context.getImageData(0, 0, video.width, video.height);
+                        const code = jsQR(imageData.data, imageData.width, imageData.height);
+                        if (code) {
+                            // Mostrar los datos del código QR en un alert
+                            alert(code.data);
                         }
+                    }, 1000);
+                });
+            } catch (error) {
+                console.error('Error accessing the camera:', error);
+            }
+        }
 
-                        startScanner();
-                    </script>
+        startScanner();
 
-                </div>
-            </div>
-        </div>
-        <div id="pie">
-            <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales
-                Caldas Colombia. Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm
-                Tel conmutador +57 6 8781500 / Fax 8781501 / Apartado aéreo 275 / Línea gratuita: 01-8000-512120
-                Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción
-                Email: atencionalciudadano@ucaldas.edu.co
-                Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co
-            </p>
-        </div>
+    </script>
 
 
-        <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/jsqr@1.0.0/dist/jsQR.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
-    </body>
 
-    </html>
+
+
+
+
+
+
+    <div id="pie">
+        <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales
+            Caldas Colombia. Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm
+            Tel conmutador +57 6 8781500 / Fax 8781501 / Apartado aéreo 275 / Línea gratuita: 01-8000-512120
+            Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción
+            Email: atencionalciudadano@ucaldas.edu.co
+            Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co
+        </p>
+    </div>
+
+
+    <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.0.0/dist/jsQR.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+</body>
+
+</html>

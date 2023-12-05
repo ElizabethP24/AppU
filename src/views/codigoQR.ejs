@@ -10,7 +10,7 @@
   <title>Generar QR</title>
 
   <!-- Tu hoja de estilo personalizada -->
-  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/css/codigoQR.css">
 
 </head>
 
@@ -21,16 +21,20 @@
     <img src="/img/Logo_claroU.png" alt="Logo">
   </div>
 
-  <div class="container mt-5">
-    <div class="row">
-      <div class="col-md-4">
-        <button class="btn btn-primary" id="btnGenerarQR">Generar QR</button>
-      </div>
-      <div class="col-md-8">
-        <div id="qrcode"></div>
-      </div>
+
+  <div id="contenido">
+    <button class="btn btn-primary" id="btnGenerarQR">Generar QR</button>
+
+    <div class="col-md-8">
+      <div id="qrcode"></div>
     </div>
+
+
   </div>
+
+
+
+
 
   <script>
     const btnGenerarQR = document.getElementById('btnGenerarQR');
@@ -39,8 +43,6 @@
       height: 256,
       correctLevel: QRCode.CorrectLevel.L,
     });
-
-    const claveEncriptacion = "claveSecreta"; // La misma clave usada para cifrar y descifrar
 
     const data = {
       "sala": "Sala L",
@@ -54,13 +56,11 @@
       const jsonData = JSON.stringify(data);
       const qrCodeLabel = "Datos del usuario";
 
-      // Encriptar los datos con AES
-      const encryptedData = CryptoJS.AES.encrypt(jsonData, claveEncriptacion).toString();
-
-      // Generar el código QR con los datos encriptados
-      qrcode.makeCode(encryptedData, { label: qrCodeLabel });
+      // Generar el código QR con los datos sin encriptar
+      qrcode.makeCode(jsonData, { label: qrCodeLabel });
     });
   </script>
+
 
   <div id="pie">
     <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas
