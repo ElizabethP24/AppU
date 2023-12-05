@@ -18,7 +18,7 @@ const debugApp = debug('app');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const upload = multer({ dest: 'uploads/' }); // Carpeta donde se almacenarán temporalmente los archivo
-
+ 
 // Configuración de bodyParser y otras configuraciones de Express
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

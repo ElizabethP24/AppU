@@ -42,6 +42,7 @@ usuariosRouter.route('/crear').post(async (req, res) => {
         'telefono',
         'correo',
         'usuario',
+        'contrasena',
         'rol',
         'facultad',
         'semestre',
