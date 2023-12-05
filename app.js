@@ -98,7 +98,7 @@ app.get('/estudiante', (req, res) => {
 });
 
 app.get('/escanerQR', (req, res) => {
-  res.render('escaner');
+  res.render('escanerQR');
 });
 
 app.get('/perfil', (req, res) => {
@@ -108,6 +108,10 @@ app.get('/perfil', (req, res) => {
 app.get('/Estudiante', (req, res) => {
   res.render('registroEstudiante');
 });
+
+app.get('/escanerPrueba', (req, res) => {
+  res.render('escanerPrueba');
+}); 
 
 app.get('/codigoQR', (req, res) => {
   res.render('codigoQR');
@@ -136,7 +140,64 @@ app.get('/estudiante', ensureAuthenticated, function(req, res) {
   res.render('vista_estudiante', { user: req.user });
 });
 
+// Ruta POST para la recuperación de contraseña
+app.post('/rcontrasena', async (req, res) => {
+  try {
+      // Desestructurar los datos del cuerpo de la solicitud
+      const { correo, documento } = req.body;
+     
 
+      // Validar datos del lado del servidor
+      const validacionExitosa = validarDatos(correo, documento);
+
+      if (!validacionExitosa) {
+          res.send("Datos no válidos");
+          return;
+      }
+
+    const usuarios = await sql`
+    SELECT * FROM personal_u 
+    WHERE correo = ${correo} AND documento = ${documento};
+`;
+
+console.log(`Resultado de la consulta:`, usuarios);
+
+      // Verificar si se encontraron usuarios
+      if (usuarios.length > 0) {
+          // Renderizar la vista 'rcontrasena.ejs'
+          res.render('rcontrasena', { usuarios });
+      } else {
+          res.send("La información es incorrecta");
+      }
+  } catch (error) {
+      // Manejar errores durante la verificación del usuario
+      console.error("Error al verificar usuario:", error.message);
+      res.status(500).send("Hubo un error al verificar el usuario");
+  }
+});
+
+// Función de validación del lado del servidor
+function validarDatos(correo, documento) {
+  const dominio = "@ucaldas.edu.co";
+
+  // Verificar que correo y documento no estén vacíos
+  if (!correo || !documento) {
+      return false;
+  }
+
+  // Verificar que la longitud del documento sea menor de 11 caracteres
+  if (documento.length >= 11) {
+      return false;
+  }
+
+  // Verificar que el correo tenga el dominio correcto
+  if (correo.indexOf(dominio) === -1) {
+      return false;
+  }
+
+  // Todos los criterios de validación se cumplieron
+  return true;
+}
 
 
 app.post('/subir', upload.single('archivo'), async (req, res) => {
@@ -228,8 +289,6 @@ app.post('/subir', upload.single('archivo'), async (req, res) => {
     return;
   }
 }
-
-
     res.send('Archivo subido y procesado correctamente.');
   } catch (error) {
     console.error(`Error al procesar el archivo: ${error.message}`);

@@ -1,11 +1,8 @@
-import express from "express";
-const forgotpass = express.Router();
 import sql from '../../config/database.js';
 
 forgotpass.post('/rcontrasena', async (req, res) => {
     try {
         const { correo, documento } = req.body;
-
         const usuarios = await sql`
             SELECT * FROM personal_u 
             WHERE correo = ${correo} AND documento = ${documento};
@@ -13,7 +10,7 @@ forgotpass.post('/rcontrasena', async (req, res) => {
 
         if (usuarios.count > 0) {
             // Renderizar la vista 'rcontrasena.ejs'
-            res.render('rcontrasena', { usuario });
+            res.render('rcontrasena', { usuarios });
         } else {
             res.send("La información es incorrecta");
         }

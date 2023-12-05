@@ -18,7 +18,6 @@
 
     <div class="container-fluid pt-5">
         <div class="d-flex flex-column text-center mb-5 pt-5">
-
             <main class="container">
                 <h2>Saca tu teléfono y escanea el código QR</h2>
                 <video id="qr-scanner" width="300" height="300" playsinline autoplay></video>
@@ -38,45 +37,50 @@
                                 video.srcObject = stream;
 
                                 const track = stream.getVideoTracks()[0];
+                                const capabilities = track.getCapabilities();
+                                const settings = track.getSettings();
+
+                                const { width, height } = capabilities;
+                                video.width = settings.width || width;
+                                video.height = settings.height || height;
+
                                 const canvas = document.createElement('canvas');
                                 const context = canvas.getContext('2d');
-
                                 canvas.width = video.width;
                                 canvas.height = video.height;
 
-                                const cryptoKey = "claveSecreta"; // La misma clave usada para cifrar y descifrar
+                                const qrScannerInterval = setInterval(() => {
+                                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                                    const code = jsQR(imageData.data, canvas.width, canvas.height);
 
-                                video.addEventListener('loadeddata', () => {
-                                    setInterval(() => {
-                                        context.drawImage(video, 0, 0, video.width, video.height);
-                                        const imageData = context.getImageData(0, 0, video.width, video.height);
-                                        const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-                                        if (code) {
-                                            try {
-                                                const decryptedData = CryptoJS.AES.decrypt(code.data, cryptoKey).toString(CryptoJS.enc.Utf8);
-                                                console.log(JSON.parse(decryptedData));
-                                                // Aquí puedes trabajar con el JSON desencriptado, por ejemplo, mostrarlo en la interfaz.
-                                            } catch (error) {
-                                                console.error('Error al desencriptar el código QR:', error);
-                                            }
+                                    if (code) {
+                                        clearInterval(qrScannerInterval);
+                                        try {
+                                            const decryptedData = CryptoJS.AES.decrypt(code.data, "claveSecreta").toString(CryptoJS.enc.Utf8);
+                                            console.log(JSON.parse(decryptedData));
+                                            // Aquí puedes trabajar con el JSON desencriptado, por ejemplo, mostrarlo en la interfaz.
+                                        } catch (error) {
+                                            console.error('Error al desencriptar el código QR:', error);
                                         }
-                                    }, 1000);
-                                });
+                                    }
+                                }, 1000 / 5);
+
                             } catch (error) {
                                 console.error('Error accessing the camera:', error);
                             }
                         }
-
                         startScanner();
                     </script>
+
+                    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.0.0/dist/jsQR.min.js"></script>
 
                 </div>
             </div>
         </div>
         <div id="pie">
-            <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales
-                Caldas Colombia. Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm
+            <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas
+                Colombia. Horario de atención: 7:45 am - 11:45 am y 1:45 pm - 5:45 pm. Viernes: 7:00 am a 3:30 pm
                 Tel conmutador +57 6 8781500 / Fax 8781501 / Apartado aéreo 275 / Línea gratuita: 01-8000-512120
                 Línea de servicio a la ciudadanía/Usuario/Línea anticorrupción
                 Email: atencionalciudadano@ucaldas.edu.co
@@ -84,13 +88,10 @@
             </p>
         </div>
 
-
         <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/jsqr@1.0.0/dist/jsQR.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
     </body>
 
     </html>

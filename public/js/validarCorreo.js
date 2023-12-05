@@ -36,8 +36,38 @@ function validarCorreoCambio() {
 }
 
 
+async function validarCambio() {
+    var correo = document.getElementById("email").value;
+    var dominio = "@ucaldas.edu.co";
+    var documento = document.getElementById("documento").value;
 
-/*------------------ENVIAR CODIGO AL CORREO PARA RECUPERACION*/
+    if (documento === "" || correo === "") {
+        alert("Debe llenar todos los campos");
+        return false;
+    }
+
+    if (documento.length >= 11) {
+        alert("El documento es muy largo");
+        return false;
+    }
+
+    try {
+        const result = await sql`
+            SELECT * FROM personal_u 
+            WHERE correo = ${correo} AND documento = ${documento};
+        `;
+
+        if (result.count > 0) {
+            alert("Correo electrónico y documento válidos. Redirigiendo...");
+            window.location.href = "/rcontrasena";
+        } else {
+            alert("Los datos no son correctos. Verifique su correo y documento.");
+        }
+    } catch (error) {
+        console.error("Error al consultar la base de datos:", error);
+        alert("Ocurrió un error al validar los datos. Por favor, inténtelo de nuevo.");
+    }
+}
 
 
 

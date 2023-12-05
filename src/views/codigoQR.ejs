@@ -4,11 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="js/validarCorreo.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-  <title>Validación Correo Electrónico</title>
-
-
+  <title>Generar QR</title>
 
   <!-- Tu hoja de estilo personalizada -->
   <link rel="stylesheet" href="/css/index.css">
@@ -25,7 +24,6 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-4">
-
         <button class="btn btn-primary" id="btnGenerarQR">Generar QR</button>
       </div>
       <div class="col-md-8">
@@ -62,11 +60,8 @@
       // Generar el código QR con los datos encriptados
       qrcode.makeCode(encryptedData, { label: qrCodeLabel });
     });
-
-
-
-
   </script>
+
   <div id="pie">
     <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas
       Colombia.
@@ -77,11 +72,6 @@
       Notificaciones judiciales escribir a: gestion.juridica@ucaldas.edu.co
     </p>
   </div>
-
-  <!-- Enlaces a Bootstrap JS y Popper.js (necesarios para ciertas funcionalidades de Bootstrap) -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
-  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 
 </body>
 
