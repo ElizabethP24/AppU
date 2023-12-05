@@ -32,35 +32,25 @@
 
   </div>
 
-
-
-
-
   <script>
     const btnGenerarQR = document.getElementById('btnGenerarQR');
     const qrcode = new QRCode(document.getElementById('qrcode'), {
-      width: 256,
-      height: 256,
-      correctLevel: QRCode.CorrectLevel.L,
+        width: 128,
+        height: 128,
     });
 
     const data = {
-      "sala": "Sala L",
-      "horaEntrada": "09:00",
-      "horaSalida": "13:00",
-      "nombreEncargado": "Juan Perez",
-      "codigoEncargado": "ABC123"
+        "sala": "Sala L",
+        "Entrada": "09:00",
+        "Salida": "13:00",
+        "Encargado": "Juan Perez",
+             
     };
 
     btnGenerarQR.addEventListener('click', () => {
-      const jsonData = JSON.stringify(data);
-      const qrCodeLabel = "Datos del usuario";
-
-      // Generar el código QR con los datos sin encriptar
-      qrcode.makeCode(jsonData, { label: qrCodeLabel });
+        qrcode.makeCode(JSON.stringify(data));
     });
-  </script>
-
+</script>
 
   <div id="pie">
     <p>Canales físicos y electrónicos para atención al público, Sede Principal Calle 65 No 26 - 10, Manizales Caldas

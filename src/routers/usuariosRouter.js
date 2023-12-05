@@ -3,23 +3,21 @@ const usuariosRouter = express.Router();
 import sql from '../../config/database.js';
 
 
-usuariosRouter.route('/').get(async (req, res) => {
-    const usuarios = await sql`
-select 
-nombre,
-documento,
-direccion,
-telefono,
-correo,
-usuario,
-contrasena,
-rol,
-facultad, 
-semestre, 
-programa
-from personal_u`
-    res.render('usuarios/usuarios', { usuario });
+usuariosRouter.route('/lista').get(async (req, res) => {
+    try {
+        // Realiza la consulta SQL a la base de datos
+        const usuarios = await sql`
+            SELECT nombre, documento, direccion, telefono, correo, rol, facultad, semestre, programa
+            FROM personal_u;
+        `;
+
+        res.render('vistaUsuarios', { usuarios }); // Asegúrate de pasar { usuarios }
+    } catch (error) {
+        console.error("Error al obtener usuarios:", error.message);
+        res.status(500).send("Hubo un error al obtener la información de usuarios");
+    }
 });
+
 
 usuariosRouter.route('/crear').post(async (req, res) => {
     const body = req.body;
@@ -132,5 +130,23 @@ usuariosRouter.route('/logout').get((req, res) => {
     req.session.destroy();
     res.redirect('/');
 });  
+
+usuariosRouter.route('/lista').get(async (req, res) => {
+    const usuario = await sql`
+select 
+nombre,
+documento,
+direccion,
+telefono,
+correo,
+rol,
+facultad,
+semestre,
+programa
+from personal_u`
+    res.render('vistaUsuarios', { usuario });
+    console.log(usuario);
+});
+
     
 export default usuariosRouter;

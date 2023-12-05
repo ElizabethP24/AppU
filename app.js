@@ -84,6 +84,10 @@ app.get('/registro', (req, res) => {
   res.render('registro');
 });
 
+app.get('/horario', (req, res) => {
+  res.render('salones');
+});
+
 app.get('/rcontrasena', (req, res) => {
   res.render('rcontrasena');
 });
@@ -143,6 +147,9 @@ app.get('/estudiante', ensureAuthenticated, function (req, res) {
   res.render('vista_estudiante', { user: req.user });
 });
 
+
+
+
 // Ruta POST para la recuperación de contraseña
 app.post('/rcontrasena', async (req, res) => {
   try {
@@ -157,6 +164,7 @@ app.post('/rcontrasena', async (req, res) => {
       res.send("Datos no válidos");
       return;
     }
+    
 
     const usuarios = await sql`
     SELECT * FROM personal_u 
