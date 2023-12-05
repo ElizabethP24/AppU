@@ -12,10 +12,9 @@ forgotpass.post('/rcontrasena', async (req, res) => {
         `;
 
         if (usuarios.count > 0) {
-
-            res.render('/rcontrasena', { usuario });
+            // Renderizar la vista 'rcontrasena.ejs'
+            res.render('rcontrasena', { usuario });
         } else {
-
             res.send("La información es incorrecta");
         }
     } catch (error) {
@@ -23,4 +22,5 @@ forgotpass.post('/rcontrasena', async (req, res) => {
         res.status(500).send("Hubo un error al verificar el usuario");
     }
 });
+
 
