@@ -69,6 +69,10 @@ app.get('/enviarCorreo', (req, res) => {
   res.render('enviarCorreo');
 });
 
+app.get('/TerminosyCondiciones', (req, res) => {
+  res.render('terminosycondiciones');
+});
+
 app.get('/validar', (req, res) => {
   res.render('validar');
 });
