@@ -65,6 +65,10 @@ app.get('/login', (req, res) => {
   res.render('login');
 });
 
+app.get('/enviarCorreo', (req, res) => {
+  res.render('enviarCorreo');
+});
+
 app.get('/validar', (req, res) => {
   res.render('validar');
 });
@@ -127,6 +131,9 @@ function ensureAuthenticated(req, res, next) {
 app.get('/estudiante', ensureAuthenticated, function(req, res) {
   res.render('vista_estudiante', { user: req.user });
 });
+
+
+
 
 app.post('/subir', upload.single('archivo'), async (req, res) => {
   try {
